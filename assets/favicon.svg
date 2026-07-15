@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>MZ, Muhammad Zahid</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101c2c"/>
+      <stop offset="1" stop-color="#080d14"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="url(#bg)"/>
+  <path d="M11 45V19h6.2l7.4 16.1L32 19h6.2v26h-5.4V29.4l-6 13.1h-3.6l-6-13.1V45H11Z" fill="#f2f6fb"/>
+  <path d="M39.5 45v-4.6l10.6-16.1H40V19h17v4.6L46.4 39.7H57.2V45H39.5Z" fill="#2fd8ce"/>
+  <rect x="25" y="50.5" width="14" height="2.6" rx="1.3" fill="#2fd8ce"/>
+</svg>
