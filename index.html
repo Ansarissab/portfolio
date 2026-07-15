@@ -2,578 +2,1216 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zahid's Portfolio | Mission Control</title>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Exo+2:wght@300;400;500;600;700;800&display=swap");
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <title>Muhammad Zahid, Full Stack Engineer | Ruby on Rails, Python &amp; DevOps</title>
+  <meta name="description"
+    content="Full stack engineer, 6+ years. Ruby on Rails, Python and DevOps for FinTech, eCommerce, fleet management and SaaS. Cut 60% admin overhead for a 50+ vehicle fleet, 35% query latency across 3 production apps. Lahore, Pakistan. Available for contract work.">
+  <meta name="author" content="Muhammad Zahid">
+  <link rel="canonical" href="https://ansarissab.github.io/portfolio/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#090d11" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f7f8f7" media="(prefers-color-scheme: light)">
 
-    body {
-      font-family: "Exo 2", sans-serif;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      min-height: 100vh;
-      color: #ffffff;
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
-    }
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Muhammad Zahid">
+  <meta property="og:title" content="Muhammad Zahid, Full Stack Engineer | Rails, Python, DevOps">
+  <meta property="og:description"
+    content="I build systems that cut cost and stay shipped. 6+ years across FinTech, eCommerce, fleet management and SaaS.">
+  <meta property="og:url" content="https://ansarissab.github.io/portfolio/">
+  <meta property="og:image" content="https://ansarissab.github.io/portfolio/assets/og.png">
+  <meta property="og:image:alt" content="Muhammad Zahid, full stack engineer, Rails, Python, DevOps">
+  <meta property="profile:first_name" content="Muhammad">
+  <meta property="profile:last_name" content="Zahid">
+  <meta name="twitter:card" content="summary_large_image">
 
-    /* Animated starfield */
-    .stars {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon-180.png">
 
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 3s infinite;
-    }
+  <!-- fonts are same-origin: preload, no third-party handshake -->
+  <link rel="preload" href="assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css">
 
-    .star:nth-child(2n) {
-      animation-delay: 1s;
-    }
+  <!-- Set theme before first paint. Inline by necessity: prevents FOUC. -->
+  <script>
+    (function () {
+      document.documentElement.classList.add("js");
+      try {
+        var t = localStorage.getItem("mz-theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      } catch (e) { }
+    })();
+  </script>
 
-    .star:nth-child(3n) {
-      animation-delay: 2s;
-    }
-
-    @keyframes twinkle {
-
-      0%,
-      100% {
-        opacity: 0.3;
-        transform: scale(1);
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://ansarissab.github.io/portfolio/#person",
+        "name": "Muhammad Zahid",
+        "givenName": "Muhammad",
+        "familyName": "Zahid",
+        "alternateName": "Ansarissab",
+        "jobTitle": "Full Stack Engineer",
+        "description": "Full stack engineer with 6+ years delivering production web applications across FinTech, eCommerce, fleet management and SaaS. Specialises in Ruby on Rails, Python and DevOps.",
+        "email": "mailto:zahidensari116@gmail.com",
+        "telephone": "+923434101848",
+        "url": "https://ansarissab.github.io/portfolio/",
+        "image": "https://ansarissab.github.io/portfolio/assets/og.png",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lahore",
+          "addressCountry": "PK"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Central Punjab (UCP), Lahore"
+        },
+        "knowsAbout": [
+          "Ruby on Rails", "Python", "DevOps", "Kamal", "Docker", "Kubernetes",
+          "Next.js", "React", "TypeScript", "Cloudflare Workers", "PostgreSQL",
+          "Redis", "Sidekiq", "Stripe integration", "AWS", "Azure", "GraphQL",
+          "Hotwire", "Terraform", "CI/CD", "Angular", "C#"
+        ],
+        "knowsLanguage": ["English", "Urdu"],
+        "sameAs": [
+          "https://github.com/Ansarissab",
+          "https://www.linkedin.com/in/zahidensari",
+          "https://www.upwork.com/freelancers/~019c0d895fbcb33693"
+        ],
+        "hasOccupation": {
+          "@type": "Occupation",
+          "name": "Full Stack Engineer",
+          "occupationalCategory": "15-1252.00",
+          "skills": "Ruby on Rails, Python, DevOps, Next.js, Cloudflare Workers, PostgreSQL, Stripe, AWS, Azure, Docker, Kamal"
+        },
+        "seeks": {
+          "@type": "Demand",
+          "name": "Contract and full-time full stack engineering work"
+        }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://ansarissab.github.io/portfolio/#page",
+        "url": "https://ansarissab.github.io/portfolio/",
+        "name": "Muhammad Zahid, Full Stack Engineer",
+        "mainEntity": { "@id": "https://ansarissab.github.io/portfolio/#person" },
+        "inLanguage": "en"
+      },
+      {
+        "@type": "SoftwareSourceCode",
+        "name": "ShopFlare",
+        "description": "Self-hosted storefront and admin on Cloudflare Workers. Next.js 16, React 19, Drizzle on D1, Hono API worker, Stripe checkout, PWA. 2,084 unit tests at 95% coverage across 22 documented ADRs.",
+        "codeRepository": "https://github.com/Ansarissab/ShopFlare",
+        "programmingLanguage": ["TypeScript", "React"],
+        "author": { "@id": "https://ansarissab.github.io/portfolio/#person" },
+        "runtimePlatform": "Cloudflare Workers"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Gymplex",
+        "applicationCategory": "BusinessApplication",
+        "description": "Multi-tenant SaaS for independent gyms. One Rails 8.1 monolith serves every gym: subdomain-resolved tenancy set in Rack middleware, per-model default scoping, Stripe Connect Standard accounts per gym so owners are paid directly. 303 commits, 35 models, 428 tests. Private repository.",
+        "operatingSystem": "Web",
+        "author": { "@id": "https://ansarissab.github.io/portfolio/#person" }
+      },
+      {
+        "@type": "SoftwareSourceCode",
+        "name": "Stripe subscriptions with PDF invoicing",
+        "description": "Rails 8.1 two-tier subscription billing. Pay gem with Stripe, hosted Checkout and embedded Elements, webhooks, correct proration on plan change, HexaPDF invoices, dual Devise scopes, bilingual EN/FR. 98 tests at 100% line coverage measured by SimpleCov.",
+        "codeRepository": "https://github.com/Ansarissab/stripe-integration",
+        "programmingLanguage": ["Ruby"],
+        "runtimePlatform": "Ruby on Rails",
+        "author": { "@id": "https://ansarissab.github.io/portfolio/#person" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Know-Heritage",
+        "applicationCategory": "EducationalApplication",
+        "description": "React Native app teaching children about cultural heritage sites through a story-driven roadmap. Content stored on-device in SQLite so it works offline with no account. Expo SDK 55, React Native 0.83, TypeScript. Client pilot, in build.",
+        "operatingSystem": "iOS, Android",
+        "author": { "@id": "https://ansarissab.github.io/portfolio/#person" }
       }
-
-      50% {
-        opacity: 1;
-        transform: scale(1.2);
-      }
-    }
-
-    /* Shooting stars */
-    .shooting-star {
-      position: fixed;
-      width: 2px;
-      height: 2px;
-      background: #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 0 6px 2px #ffffff;
-      animation: shoot 3s linear infinite;
-      opacity: 0;
-    }
-
-    @keyframes shoot {
-      0% {
-        opacity: 0;
-        transform: translateX(-100px) translateY(-100px);
-      }
-
-      10% {
-        opacity: 1;
-      }
-
-      90% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 0;
-        transform: translateX(100vw) translateY(100vh);
-      }
-    }
-
-    /* Floating nebula */
-    .nebula {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(40px);
-      animation: float-nebula 20s infinite ease-in-out;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .nebula1 {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, transparent 70%);
-      top: 20%;
-      left: 10%;
-      animation-delay: 0s;
-    }
-
-    .nebula2 {
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, rgba(0, 191, 255, 0.4) 0%, transparent 70%);
-      top: 60%;
-      right: 15%;
-      animation-delay: 7s;
-    }
-
-    .nebula3 {
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle, rgba(255, 20, 147, 0.3) 0%, transparent 70%);
-      bottom: 30%;
-      left: 60%;
-      animation-delay: 14s;
-    }
-
-    @keyframes float-nebula {
-
-      0%,
-      100% {
-        transform: translate(0, 0) rotate(0deg);
-      }
-
-      33% {
-        transform: translate(30px, -20px) rotate(120deg);
-      }
-
-      66% {
-        transform: translate(-20px, 30px) rotate(240deg);
-      }
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      position: relative;
-      z-index: 2;
-    }
-
-    header {
-      text-align: center;
-      padding: 80px 0 50px;
-      position: relative;
-    }
-
-    h1 {
-      font-family: "Space Mono", monospace;
-      font-size: 4rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      background: linear-gradient(45deg, #00d4ff, #ff00ff, #ffff00, #00ff00);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradient-shift 4s ease infinite;
-      text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-      letter-spacing: 4px;
-    }
-
-    @keyframes gradient-shift {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      50% {
-        background-position: 100% 50%;
-      }
-
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    .subtitle {
-      font-size: 1.4rem;
-      color: #87ceeb;
-      margin-bottom: 30px;
-      font-weight: 300;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      opacity: 0.9;
-    }
-
-    .divider {
-      width: 150px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #00d4ff, #ff00ff, #00d4ff, transparent);
-      margin: 0 auto;
-      border-radius: 2px;
-      animation: pulse-line 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse-line {
-
-      0%,
-      100% {
-        transform: scaleX(1);
-        opacity: 0.7;
-      }
-
-      50% {
-        transform: scaleX(1.3);
-        opacity: 1;
-      }
-    }
-
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 35px;
-      padding: 60px 0;
-    }
-
-    .portfolio-card {
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
-      padding: 30px;
-      text-decoration: none;
-      color: #ffffff;
-      transition: all 0.5s ease;
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-
-    .portfolio-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 255, 0.1), rgba(0, 212, 255, 0.1));
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      border-radius: 20px;
-    }
-
-    .portfolio-card:hover::before {
-      opacity: 1;
-    }
-
-    .portfolio-card:hover {
-      transform: translateY(-15px) scale(1.03);
-      box-shadow: 0 25px 50px rgba(0, 212, 255, 0.3), 0 0 30px rgba(255, 0, 255, 0.2);
-      border-color: #00d4ff;
-    }
-
-    .mission-badge {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-      color: white;
-      padding: 8px 12px;
-      border-radius: 25px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-    }
-
-    .card-icon {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      margin-bottom: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      transition: all 0.5s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card-icon::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.6s ease;
-    }
-
-    .portfolio-card:hover .card-icon::after {
-      transform: translateX(100%);
-    }
-
-    .portfolio-card:hover .card-icon {
-      transform: scale(1.1) rotate(360deg);
-    }
-
-    .card-icon-1 {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      box-shadow: 0 0 25px rgba(102, 126, 234, 0.6);
-    }
-
-    .card-icon-2 {
-      background: linear-gradient(135deg, #f093fb, #f5576c);
-      box-shadow: 0 0 25px rgba(240, 147, 251, 0.6);
-    }
-
-    .card-icon-3 {
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      box-shadow: 0 0 25px rgba(79, 172, 254, 0.6);
-    }
-
-    .card-title {
-      font-family: "Space Mono", monospace;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 15px;
-      color: #00d4ff;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .card-description {
-      color: #b8c6db;
-      margin-bottom: 25px;
-      font-size: 1rem;
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    .card-link {
-      display: flex;
-      align-items: center;
-      color: #87ceeb;
-      font-size: 0.95rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-    }
-
-    .portfolio-card:hover .card-link {
-      color: #00d4ff;
-    }
-
-    .arrow {
-      margin-left: 12px;
-      transition: transform 0.3s ease;
-      font-size: 1.2rem;
-    }
-
-    .portfolio-card:hover .arrow {
-      transform: translateX(10px);
-    }
-
-    .coordinates {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      font-family: "Space Mono", monospace;
-      font-size: 0.7rem;
-      color: #666;
-      opacity: 0.7;
-    }
-
-    footer {
-      text-align: center;
-      padding: 50px 0;
-      color: #87ceeb;
-      font-family: "Space Mono", monospace;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      opacity: 0.8;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.8rem;
-        letter-spacing: 2px;
-      }
-
-      .subtitle {
-        font-size: 1.1rem;
-        letter-spacing: 2px;
-      }
-
-      .portfolio-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        padding: 40px 0;
-      }
-
-      .portfolio-card {
-        padding: 25px;
-      }
-
-      header {
-        padding: 60px 0 30px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 2.2rem;
-        letter-spacing: 1px;
-      }
-
-      .container {
-        padding: 0 15px;
-      }
-
-      .portfolio-card {
-        padding: 20px;
-      }
-
-      .card-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
-      }
-    }
-
-    #linkedin-profile-link {
-      color: white;
-    }
-  </style>
+    ]
+  }
+  </script>
 </head>
 
 <body>
-  <div class="stars" id="stars"></div>
-  <div class="nebula nebula1"></div>
-  <div class="nebula nebula2"></div>
-  <div class="nebula nebula3"></div>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <div class="container">
-    <header>
-      <h1>ZAHID'S PORTFOLIO</h1>
-      <p class="subtitle">Mission Control Center</p>
-      <div class="divider"></div>
-    </header>
+  <header class="hdr" id="hdr">
+    <div class="wrap hdr__in">
+      <a class="brand" href="#top" aria-label="Muhammad Zahid, home">
+        <svg viewBox="0 0 64 64" role="img" aria-hidden="true" focusable="false">
+          <title>MZ</title>
+          <rect width="64" height="64" rx="14" fill="currentColor" opacity=".07" />
+          <path d="M11 45V19h6.2l7.4 16.1L32 19h6.2v26h-5.4V29.4l-6 13.1h-3.6l-6-13.1V45H11Z" fill="currentColor" />
+          <path d="M39.5 45v-4.6l10.6-16.1H40V19h17v4.6L46.4 39.7H57.2V45H39.5Z" fill="#2fd8ce" />
+          <rect x="25" y="50.5" width="14" height="2.6" rx="1.3" fill="#2fd8ce" />
+        </svg>
+        <span class="brand__txt">Muhammad Zahid <span>/ Engineer</span></span>
+      </a>
 
-    <main>
-      <div class="portfolio-grid">
-        <a href="https://ansarissab.github.io/secure-text-sync/" class="portfolio-card">
-          <div class="mission-badge">Mission Sharing Secret</div>
-          <div class="card-icon card-icon-1">🚀</div>
-          <h3 class="card-title">Tired of sharing text via emails?</h3>
-          <p class="card-description">a creative way to share text back and forth across devices, using firebase to
-            authenticate all process.</p>
-          <div class="card-link">Launch Mission <span class="arrow">🚀</span></div>
-          <div class="coordinates">X: 127.3° Y: 45.2°</div>
-        </a>
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav__links">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#labs">Labs</a></li>
+          <li><a href="#words">Words</a></li>
+          <li><a href="#demo">Demo</a></li>
+          <li><a href="#infra">Infra</a></li>
+          <li><a href="#stack">Stack</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="tgl" id="theme" type="button" aria-label="Switch to light theme" aria-live="polite">
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4.2" />
+            <path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6" />
+          </svg>
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M20.5 14.3A8.6 8.6 0 1 1 9.7 3.5a6.9 6.9 0 0 0 10.8 10.8Z" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
 
-        <a href="https://ansarissab.github.io/free-secure-image-to-pdf-generator/" class="portfolio-card">
-          <div class="mission-badge">Mission Private PDF</div>
-          <div class="card-icon card-icon-1">🖼️➡️📄</div>
-          <h3 class="card-title">Convert images to PDF securely</h3>
-          <p class="card-description">A fully client-side image to PDF converter. No uploads. No servers. 100%
-            privacy—your files never leave your browser.</p>
-          <div class="card-link">Launch Mission <span class="arrow">🚀</span></div>
-          <div class="coordinates">X: 85.6° Y: 29.4°</div>
-        </a>
+  <!-- Reading progress. aria-hidden: the scrollbar already conveys this to AT,
+       so announcing it again would be noise. -->
+  <div class="prog" id="prog" aria-hidden="true"><span class="prog__bar"></span></div>
 
-        <a href="https://ansarissab.github.io/whatsapp-timezone-extension/" class="portfolio-card">
-          <div class="mission-badge">Mission TimeSense</div>
-          <div class="card-icon card-icon-1">🌍🕒</div>
-          <h3 class="card-title">Avoid awkward WhatsApp messages</h3>
-          <p class="card-description">A smart Chrome extension for WhatsApp Web that helps you check your contact's
-            local time, so you never have to ask “Are you awake?” again.</p>
-          <div class="card-link">Launch Mission <span class="arrow">🚀</span></div>
-          <div class="coordinates">X: 66.2° Y: 39.0°</div>
-        </a>
+  <main id="main">
 
-        <a href="./harpercarrollai/index.html" class="portfolio-card">
-          <div class="mission-badge">Mission A</div>
-          <div class="card-icon card-icon-1">🚀</div>
-          <h3 class="card-title">Harper Carroll AI Tutor</h3>
-          <p class="card-description">a creative landing page of a Machine Learning AI Tutor with amazingly simgple and
-            elegant way.</p>
-          <div class="card-link">Launch Mission <span class="arrow">🚀</span></div>
-          <div class="coordinates">X: 127.3° Y: 45.2°</div>
-        </a>
+    <!-- ============================ HERO ============================ -->
+    <section class="hero wrap" id="top" aria-labelledby="hero-h">
+      <div class="hero__grid">
+        <p class="hero__rail" aria-hidden="true">Lahore, PK &#183; 06&#8202;:&#8202;+05</p>
 
-        <a href="./index.html" class="portfolio-card">
-          <div class="mission-badge">Mission B</div>
-          <div class="card-icon card-icon-2">🌌</div>
-          <h3 class="card-title">Project Nebula Comming soon</h3>
-          <p class="card-description">Navigate through dynamic applications and cosmic development techniques using
-            cutting-edge technologies from distant galaxies.</p>
-          <div class="card-link">Launch Mission <span class="arrow">🚀</span></div>
-          <div class="coordinates">X: 89.7° Y: 156.8°</div>
-        </a>
+        <div>
+          <p class="eyebrow">Full Stack Engineer · Rails · Python · DevOps</p>
 
+          <h1 class="display" id="hero-h">I build systems that <em>cut cost</em> and stay shipped.</h1>
+
+          <p class="lede hero__lede">
+            Six years across FinTech, eCommerce, fleet management and SaaS. I take work end to end:
+            architecture, API design, deployment, handoff. Then I measure what it changed. Every
+            number on this page links to the thing that produced it.
+          </p>
+
+          <div class="actions">
+            <a class="btn btn--primary" href="#contact">
+              Start a project
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a class="btn btn--ghost" href="#work">See the receipts</a>
+          </div>
+
+          <ul class="hero__meta">
+            <li><span class="dot-live" aria-hidden="true"></span> Available for contract work</li>
+            <li>6+ years shipping</li>
+            <li>Lahore, Pakistan · UTC+5</li>
+          </ul>
+        </div>
       </div>
-    </main>
 
-    <footer>
-      <p>&copy; <span id="currentYear"></span> <a href="https://www.linkedin.com/in/zahidensari/"
-          id="linkedin-profile-link">Zahid's</a> Portfolio
-        Command. Earth, We Have Talent. Get Set Hire </p>
-    </footer>
-  </div>
+      <!-- headline outcomes. amber = measured, always sourced. -->
+      <ul class="ledger reveal" aria-label="Headline outcomes">
+        <li class="ledger__item">
+          <p class="metric"><span data-count="60" data-suffix="%">60<span class="metric__unit">%</span></span></p>
+          <p class="metric__label">Administrative overhead removed for a 50+ vehicle fleet</p>
+          <p class="metric__src">EasyForTrip · Rails + Stripe</p>
+        </li>
+        <li class="ledger__item">
+          <p class="metric"><span data-count="35" data-suffix="%">35<span class="metric__unit">%</span></span></p>
+          <p class="metric__label">Query latency cut across 3 production apps, 1,000+ monthly users</p>
+          <p class="metric__src">Devsinc · Redis + GraphQL</p>
+        </li>
+        <li class="ledger__item">
+          <p class="metric"><span data-count="4.8" data-decimals="1" data-suffix="×">4.8<span
+                class="metric__unit">×</span></span></p>
+          <p class="metric__label">Faster page loads after a WordPress&nbsp;→&nbsp;static rebuild</p>
+          <p class="metric__src">amitramanuj.com · measured, 3-run average</p>
+        </li>
+      </ul>
+    </section>
 
-  <script>
-    // Get current year dynamically
-    document.getElementById("currentYear").textContent = new Date().getFullYear();
+    <!-- ============================ WORK ============================ -->
+    <section class="section" id="work" aria-labelledby="work-h">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-head__no" aria-hidden="true">01</p>
+          <div class="section-head__body">
+            <span class="eyebrow">Selected work</span>
+            <h2 id="work-h">Outcomes, with the evidence attached.</h2>
+            <p>Ordered by what changed, not by what I touched. Where a number came from a client
+              system I could not measure myself, I say so.</p>
+          </div>
+        </div>
 
-    // Create starfield
-    function createStars() {
-      const starsContainer = document.getElementById("stars");
+        <ol class="cases">
 
-      for (let i = 0; i < 200; i++) {
-        const star = document.createElement("div");
-        star.className = "star";
-        star.style.left = Math.random() * 100 + "%";
-        star.style.top = Math.random() * 100 + "%";
-        star.style.animationDelay = Math.random() * 3 + "s";
+          <!-- 01 ShopFlare -->
+          <li class="case reveal">
+            <p class="case__no" aria-hidden="true">01</p>
+            <div class="case__body">
+              <span class="eyebrow">Own product · Open source</span>
+              <h3 class="case__title">
+                <a href="https://github.com/Ansarissab/ShopFlare" rel="noopener">ShopFlare
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M7 17 17 7M9 7h8v8" />
+                  </svg>
+                </a>
+              </h3>
+              <p class="case__desc">
+                A self-hosted alternative to Shopify Basic: storefront, admin, Stripe checkout,
+                cash-on-delivery and WhatsApp ordering, installable as a PWA. It runs on
+                Cloudflare's free tier, so the hosting bill is nothing.
+              </p>
 
-        // Random star sizes
-        const size = Math.random() * 3 + 1;
-        star.style.width = size + "px";
-        star.style.height = size + "px";
+              <div class="case__outcome">
+                <p class="metric"><span data-count="2084">2,084</span></p>
+                <p>unit tests at 95% coverage, plus integration tests against real workerd and
+                  full end-to-end, accessibility and visual-regression suites. 22 architecture
+                  decision records. 657 commits.</p>
+              </div>
 
-        starsContainer.appendChild(star);
-      }
-    }
+              <p class="case__role">
+                <b>Role:</b> sole author, architecture through deploy.<br>
+                <b>Notable:</b> deliberate two-Worker split. The SSR worker holds zero database
+                bindings; a separate Hono API worker owns every binding and secret. That is a real
+                trust boundary, and the cross-origin cookie problem it creates is solved with
+                Bearer auth and written up in ADR-0014.
+              </p>
+              <ul class="stack">
+                <li>Next.js 16</li>
+                <li>React 19</li>
+                <li>TypeScript</li>
+                <li>Cloudflare Workers</li>
+                <li>Hono</li>
+                <li>Drizzle / D1</li>
+                <li>R2 + KV</li>
+                <li>Stripe</li>
+                <li>Vitest</li>
+                <li>Playwright</li>
+              </ul>
+            </div>
+            <figure class="case__shot">
+              <a href="https://shopflare-web.zahidensari116.workers.dev/" rel="noopener">
+                <img src="assets/shots/shopflare.webp" width="1000" height="625" loading="lazy" decoding="async"
+                  alt="ShopFlare storefront showing a product grid of apparel and accessories.">
+              </a>
+            </figure>
+          </li>
 
-    // Create shooting stars
-    function createShootingStars() {
-      setInterval(() => {
-        const shootingStar = document.createElement("div");
-        shootingStar.className = "shooting-star";
-        shootingStar.style.left = Math.random() * 100 + "%";
-        shootingStar.style.top = Math.random() * 100 + "%";
-        document.body.appendChild(shootingStar);
+          <!-- 02 Gymplex -->
+          <li class="case reveal">
+            <p class="case__no" aria-hidden="true">02</p>
+            <div class="case__body">
+              <span class="eyebrow">Multi-tenant SaaS · Private</span>
+              <h3 class="case__title">Gymplex</h3>
+              <p class="case__desc">
+                Independent gyms need software, but each one wants its own subdomain, its own
+                branding, and its own money. Gymplex is one Rails monolith serving all of them.
+                Members book classes and pay, staff run check-ins and schedules, and the platform
+                operator administers every gym from one place.
+              </p>
 
-        setTimeout(() => {
-          shootingStar.remove();
-        }, 3000);
-      }, 2000);
-    }
+              <div class="case__outcome">
+                <p class="metric metric--text">One codebase, isolated tenants</p>
+                <p>Tenant resolution happens in Rack middleware before the router: the subdomain
+                  maps to a gym, and every gym-owned model carries a
+                  <code class="code">default_scope</code> bound to it. Cross-tenant leakage takes a
+                  deliberate, documented bypass, not an accident.</p>
+              </div>
 
-    // Initialize space elements
-    window.addEventListener("load", () => {
-      createStars();
-      createShootingStars();
-    });
-  </script>
+              <p class="case__role">
+                <b>Role:</b> sole author: product, architecture, build.<br>
+                <b>Notable:</b> Stripe Connect with one Standard account per gym. Owners connect
+                their own Stripe by OAuth and get paid directly; the platform takes a configurable
+                application fee. Exactly three scope bypasses exist, each written down and defended:
+                the platform operator, Stripe webhooks resolving tenant from
+                <code class="code">event.account</code>, and background jobs restoring tenant from a
+                job argument.<br>
+                <b>Scale:</b> 303 commits over 5.5 weeks, 35 models, 28 migrations, 428 tests.
+              </p>
+              <ul class="stack">
+                <li>Rails 8.1</li>
+                <li>Ruby 4.0</li>
+                <li>PostgreSQL</li>
+                <li>Stripe Connect</li>
+                <li>Hotwire</li>
+                <li>Slim</li>
+                <li>Tailwind</li>
+                <li>Solid Queue</li>
+                <li>Minitest</li>
+              </ul>
+            </div>
+            <figure class="case__shot">
+              <img src="assets/shots/gymplex.webp" width="1000" height="431" loading="lazy"
+                decoding="async"
+                alt="Gymplex staff dashboard listing gym members with roles, join dates and active status, branded for the tenant gym.">
+            </figure>
+          </li>
+
+          <!-- 03 EasyForTrip -->
+          <li class="case reveal">
+            <p class="case__no" aria-hidden="true">03</p>
+            <div class="case__body">
+              <span class="eyebrow">Fleet management · Contract</span>
+              <h3 class="case__title">
+                <a href="https://easyfortrip.com" rel="noopener">EasyForTrip
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M7 17 17 7M9 7h8v8" />
+                  </svg>
+                </a>
+              </h3>
+              <p class="case__desc">
+                A car rental and chauffeur operator was scheduling a 50+ vehicle fleet by hand and
+                could not take money online. I architected an automated booking system and wired in
+                a Stripe payment gateway, so the business could collect revenue on the web for the
+                first time.
+              </p>
+
+              <div class="case__outcome">
+                <p class="metric"><span data-count="60" data-suffix="%">60<span class="metric__unit">%</span></span></p>
+                <p>less administrative overhead, and 15+ hours a week of manual scheduling gone.
+                  Checkout sits behind authentication, so the payment flow is not publicly
+                  verifiable. The booking platform itself is live.</p>
+              </div>
+
+              <p class="case__role">
+                <b>Role:</b> architecture, build, deploy.<br>
+                <b>Verified:</b> Rails confirmed in response headers; Heroku behind Cloudflare.
+              </p>
+              <ul class="stack">
+                <li>Ruby on Rails</li>
+                <li>Stripe</li>
+                <li>PostgreSQL</li>
+                <li>Heroku</li>
+                <li>Cloudflare</li>
+              </ul>
+            </div>
+            <figure class="case__shot">
+              <a href="https://easyfortrip.com" rel="noopener">
+                <img src="assets/shots/easyfortrip.webp" width="1000" height="625" loading="lazy" decoding="async"
+                  alt="EasyForTrip booking platform homepage with a vehicle booking interface.">
+              </a>
+            </figure>
+          </li>
+
+          <!-- 04 Kleptofinder -->
+          <li class="case reveal">
+            <p class="case__no" aria-hidden="true">04</p>
+            <div class="case__body">
+              <span class="eyebrow">SaaS · Contract</span>
+              <h3 class="case__title">
+                <a href="https://kleptofinder.com" rel="noopener">Kleptofinder
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M7 17 17 7M9 7h8v8" />
+                  </svg>
+                </a>
+              </h3>
+              <p class="case__desc">
+                Artists and photographers had no practical way to find their work being used without
+                permission, and checking by hand took days. I built a reverse image search platform on
+                BingAI that does it while you wait. Two surfaces: a marketing site, and the
+                authenticated app at
+                <a href="https://app.kleptofinder.com" rel="noopener" class="lnk">app.kleptofinder.com</a>,
+                which is white-labelled per client subdomain.
+              </p>
+
+              <div class="case__outcome">
+                <p class="metric metric--text">Days <span class="arrow-dim">→</span> seconds</p>
+                <p>Detection time for unauthorised use of an artist's work.</p>
+              </div>
+
+              <p class="case__role">
+                <b>Role:</b> full stack: Angular front end, C# Azure Functions backend, Python
+                services, CI/CD.<br>
+                <b>Verified:</b> Angular confirmed from the app's build output. The C# / Python /
+                Azure layer sits behind login, so it is not publicly inspectable.
+              </p>
+              <ul class="stack">
+                <li>Angular</li>
+                <li>C#</li>
+                <li>Azure Functions</li>
+                <li>Python</li>
+                <li>BingAI</li>
+                <li>CI/CD</li>
+              </ul>
+            </div>
+            <figure class="case__shot">
+              <a href="https://kleptofinder.com" rel="noopener">
+                <img src="assets/shots/kleptofinder.webp" width="1000" height="625" loading="lazy" decoding="async"
+                  alt="Kleptofinder marketing site hero explaining reverse image search for artists.">
+              </a>
+            </figure>
+          </li>
+
+          <!-- 05 Craftfoxes -->
+          <li class="case reveal">
+            <p class="case__no" aria-hidden="true">05</p>
+            <div class="case__body">
+              <span class="eyebrow">eCommerce · Contract</span>
+              <h3 class="case__title">
+                <a href="https://craftfoxes.com" rel="noopener">Craftfoxes
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M7 17 17 7M9 7h8v8" />
+                  </svg>
+                </a>
+              </h3>
+              <p class="case__desc">
+                A craft marketplace running on an ageing Rails stack. I shipped product listing,
+                order management and Stripe payments, then led the Rails version upgrade that closed
+                out security debt.
+              </p>
+
+              <div class="case__outcome">
+                <p class="metric metric--text">Zero downtime</p>
+                <p>On a framework upgrade for a live marketplace the client reports serves 5,000+
+                  active sellers. Covered with RSpec before the cutover.</p>
+              </div>
+
+              <p class="case__role">
+                <b>Role:</b> feature development and upgrade lead.<br>
+                <b>Note:</b> the seller count is the client's figure, not something published on the
+                site.
+              </p>
+              <ul class="stack">
+                <li>Ruby on Rails</li>
+                <li>Stripe</li>
+                <li>RSpec</li>
+                <li>AWS</li>
+                <li>Passenger</li>
+              </ul>
+            </div>
+            <figure class="case__shot">
+              <a href="https://craftfoxes.com" rel="noopener">
+                <img src="assets/shots/craftfoxes.webp" width="1000" height="625" loading="lazy" decoding="async"
+                  alt="Craftfoxes craft marketplace homepage showing seller product listings.">
+              </a>
+            </figure>
+          </li>
+
+          <!-- 06 amitramanuj -->
+          <li class="case reveal">
+            <p class="case__no" aria-hidden="true">06</p>
+            <div class="case__body">
+              <span class="eyebrow">Performance · Contract</span>
+              <h3 class="case__title">
+                <a href="https://amitramanuj.com/" rel="noopener">amitramanuj.com
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M7 17 17 7M9 7h8v8" />
+                  </svg>
+                </a>
+              </h3>
+              <p class="case__desc">
+                A game designer's portfolio was carrying a full WordPress install to serve pages that
+                never changed, carrying the hosting bill, the update treadmill and the plugin attack
+                surface that come with it. I rebuilt it as plain HTML on GitHub Pages.
+              </p>
+
+              <div class="case__outcome">
+                <p class="metric"><span data-count="4.8" data-decimals="1" data-suffix="×">4.8<span
+                      class="metric__unit">×</span></span></p>
+                <p>faster to first byte: 0.34s against 1.64s for the equivalent WordPress stack,
+                  three-run average. Hosting went to zero, and so did the plugin attack surface.</p>
+              </div>
+
+              <p class="case__role">
+                <b>Role:</b> migration and rebuild.<br>
+                <b>Verified:</b> measured directly. <code class="code">server: GitHub.com</code>,
+                86KB, 16 asset requests.
+              </p>
+              <ul class="stack">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>GitHub Pages</li>
+                <li>WordPress migration</li>
+              </ul>
+            </div>
+            <figure class="case__shot">
+              <a href="https://amitramanuj.com/" rel="noopener">
+                <img src="assets/shots/amitramanuj.webp" width="1000" height="625" loading="lazy" decoding="async"
+                  alt="Amit Ramanuj game design portfolio, rebuilt as static HTML.">
+              </a>
+            </figure>
+          </li>
+
+          <!-- 07 Stripe + PDF -->
+          <li class="case reveal">
+            <p class="case__no" aria-hidden="true">07</p>
+            <div class="case__body">
+              <span class="eyebrow">Reference build · Open source</span>
+              <h3 class="case__title">
+                <a href="https://github.com/Ansarissab/stripe-integration" rel="noopener">Stripe
+                  subscriptions + PDF invoicing
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M7 17 17 7M9 7h8v8" />
+                  </svg>
+                </a>
+              </h3>
+              <p class="case__desc">
+                Two-tier subscription billing done properly, so I never have to solve it from scratch
+                again: hosted Checkout and embedded Elements, webhooks, plan changes with correct
+                proration, PDF invoices, and a read-only admin panel. Bilingual end to end.
+              </p>
+
+              <div class="case__outcome">
+                <p class="metric"><span data-count="100" data-suffix="%">100<span
+                      class="metric__unit">%</span></span></p>
+                <p>line coverage across 98 tests, measured by SimpleCov. Not a target, the actual
+                  recorded figure. Invoice tests assert extracted PDF text, not just that a file
+                  rendered.</p>
+              </div>
+
+              <p class="case__role">
+                <b>Role:</b> sole author.<br>
+                <b>Notable:</b> plan changes proration correctly instead of stacking a second
+                subscription, and the client-secret lookup walks Stripe's Basil API field rename with
+                a fallback chain, so it survives an API version drift that breaks most tutorials.
+                Devise runs two isolated scopes so an admin session can never become a user
+                session.<br>
+                <b>Honest framing:</b> a reference build, not a product. Small on purpose.
+              </p>
+              <ul class="stack">
+                <li>Rails 8.1</li>
+                <li>Ruby 4.0</li>
+                <li>Pay + Stripe</li>
+                <li>HexaPDF</li>
+                <li>Devise + Pundit</li>
+                <li>ActiveAdmin</li>
+                <li>Hotwire</li>
+                <li>i18n en/fr</li>
+                <li>Minitest</li>
+              </ul>
+            </div>
+            <figure class="case__shot">
+              <img src="assets/shots/stripe-demo.webp" width="1000" height="625" loading="lazy" decoding="async"
+                alt="Subscription management screen showing an active Pro plan with renewal dates and billing portal actions.">
+            </figure>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
+    <!-- ====================== FEATURE / UPGRADE WORK ====================== -->
+    <section class="section" id="maintained" aria-labelledby="maint-h">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-head__no" aria-hidden="true">02</p>
+          <div class="section-head__body">
+            <span class="eyebrow">Feature work &amp; upgrades</span>
+            <h2 id="maint-h">Live sites I shipped features into.</h2>
+            <p>Existing products where I added functionality, moved versions forward, or kept things
+              running. Not builds from scratch, and worth saying plainly because the difference matters.</p>
+          </div>
+        </div>
+
+        <div class="labs">
+          <article class="lab" data-peek="assets/shots/feat-gamingdk.webp">
+            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M3 9h18M3 15h18M9 3v18" />
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+            </svg>
+            <h3>gaming.dk</h3>
+            <p>Denmark's esports and gaming news platform, on Rails. Feature work against a large
+              editorial content base.</p>
+            <ul class="meta-links">
+              <li><a href="https://gaming.dk" rel="noopener">Visit</a></li>
+              <li><span class="muted">Rails</span></li>
+            </ul>
+          </article>
+
+          <article class="lab" data-peek="assets/shots/feat-zsolnay.webp">
+            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+              <path d="M3 6h18M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            <h3>zsolnay.hu</h3>
+            <p>Storefront work for a Hungarian porcelain manufacturer founded in 1853, on Shopify.</p>
+            <ul class="meta-links">
+              <li><a href="https://www.zsolnay.hu/" rel="noopener">Visit</a></li>
+              <li><span class="muted">Shopify</span></li>
+            </ul>
+          </article>
+
+          <article class="lab" data-peek="assets/shots/feat-migamake.webp">
+            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M4 4h16v16H4z" />
+              <path d="M8 9h8M8 13h5" />
+            </svg>
+            <h3>migamake.com</h3>
+            <p>Singapore developer-tools company. Jekyll static site: StreamCardano, Homplexity,
+              hURL, JSON Autotype.</p>
+            <ul class="meta-links">
+              <li><a href="https://migamake.com/" rel="noopener">Visit</a></li>
+              <li><span class="muted">Jekyll</span></li>
+            </ul>
+          </article>
+
+          <article class="lab" data-peek="assets/shots/feat-outlaw.webp">
+            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z" />
+              <path d="M12 12v10M3 7l9 5 9-5" />
+            </svg>
+            <h3>outlawsolutions.com</h3>
+            <p>Contract aerosol and chemical packaging manufacturer, Sparks NV. Wix.</p>
+            <ul class="meta-links">
+              <li><a href="https://www.outlawsolutions.com/" rel="noopener">Visit</a></li>
+              <li><span class="muted">Wix</span></li>
+            </ul>
+          </article>
+
+          <article class="lab" data-peek="assets/shots/feat-sunrisenv.webp">
+            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" />
+            </svg>
+            <h3>sunrisenv.com</h3>
+            <p>Industrial chemical manufacturer since 1975. NSF and EPA compliant formulations. Wix.</p>
+            <ul class="meta-links">
+              <li><a href="https://www.sunrisenv.com/" rel="noopener">Visit</a></li>
+              <li><span class="muted">Wix</span></li>
+            </ul>
+          </article>
+
+          <article class="lab">
+            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M3 20h18M6 20V9M12 20V4M18 20v-7" />
+            </svg>
+            <h3>Devsinc, 3 production apps</h3>
+            <p>Redis-backed ActiveRecord query caching for GraphQL APIs. Cut query latency 35% and
+              server-side errors 20% for 1,000+ monthly active users.</p>
+            <ul class="meta-links">
+              <li><span class="muted">Rails · Redis · GraphQL · PostgreSQL</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ LABS ============================ -->
+    <section class="section" id="labs" aria-labelledby="labs-h">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-head__no" aria-hidden="true">03</p>
+          <div class="section-head__body">
+            <span class="eyebrow">Tools &amp; in progress</span>
+            <h2 id="labs-h">Things I built because they annoyed me.</h2>
+            <p>Small tools, mostly for my own use. Some are public, some are not. Included because
+              what someone builds unpaid tends to say more than what they build on a brief.</p>
+          </div>
+        </div>
+
+        <div class="labs">
+          <article class="lab">
+            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M3 9h18M9 21V9" />
+            </svg>
+            <h3>16 Chrome extensions</h3>
+            <p>A private collection of Manifest V3 extensions built to scratch my own itches:
+              blurring WhatsApp Web messages until hovered, capturing ChatGPT and Claude
+              text-to-speech audio, copying YouTube transcripts, sorting PSX portfolio tables,
+              opening new tabs where they should open, and a dozen more.</p>
+            <ul class="meta-links">
+              <li><a href="https://github.com/Ansarissab/whatsapp-web-conversation-timezone-helper"
+                  rel="noopener">One is public</a></li>
+              <li><span class="muted">MV3 · Vanilla JS</span></li>
+            </ul>
+          </article>
+
+          <article class="lab">
+            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <rect x="6" y="2" width="12" height="20" rx="2.5" />
+              <path d="M11 18.4h2" />
+            </svg>
+            <h3>Know-Heritage <span class="muted">· in build</span></h3>
+            <p>A React Native app teaching children about cultural heritage sites through a
+              story-driven roadmap. Content lives on-device in SQLite, so it works with no signal and
+              no account. Client pilot, currently in build.</p>
+            <ul class="meta-links">
+              <li><span class="muted">Expo SDK 55 · RN 0.83 · TypeScript · SQLite · EAS</span></li>
+            </ul>
+          </article>
+
+          <article class="lab">
+            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M12 16V4M7 9l5-5 5 5" />
+              <path d="M20 16v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3" />
+            </svg>
+            <h3>Image to PDF</h3>
+            <p>A browser-only converter that never uploads your files. It is running live further
+              down this page. Try it rather than trust it.</p>
+            <ul class="meta-links">
+              <li><a href="#demo">Try it</a></li>
+              <li><a href="https://github.com/Ansarissab/free-secure-image-to-pdf-generator"
+                  rel="noopener">Source</a></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= TESTIMONIALS ========================= -->
+    <section class="section" id="words" aria-labelledby="words-h">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-head__no" aria-hidden="true">04</p>
+          <div class="section-head__body">
+            <span class="eyebrow">In their words</span>
+            <h2 id="words-h">What clients said, verbatim.</h2>
+            <p>Pulled from Upwork, unedited. Spelling and phrasing are theirs, including the
+              typos. Every one is a 5.0.</p>
+          </div>
+        </div>
+
+        <!-- The lead quote: the only one with a revenue figure attached. -->
+        <figure class="quote quote--lead reveal">
+          <blockquote>
+            <p>Our company hired Muhammad Zahid R. to build our new website and put us in all the
+              top search engines monthly. We now receive a solid <mark>30% more quality mortgage
+                approvals per week</mark>. This website developer did a quality clean corporate
+              website that brings us in <mark>23 more closed and funded mortgages per month</mark>
+              since our new website went live. Our average commission per funded mortgage is
+              <mark>$3,827.93 USD</mark>. Thank you Wholesale Direct Mortgages</p>
+          </blockquote>
+          <figcaption>
+            <span class="quote__who">Gary G.</span>
+            <span class="quote__meta">Wholesale Direct Mortgages · Nov 2021 · Verified</span>
+          </figcaption>
+        </figure>
+
+        <div class="quotes">
+          <figure class="quote reveal">
+            <blockquote>
+              <p>Muhammad optimised the speed of my website and dropped the page load speed by
+                <mark>60%</mark>! The work was fast and well communicated.</p>
+            </blockquote>
+            <figcaption>
+              <span class="quote__who">Clifton R.</span>
+              <span class="quote__meta">CEO · Jan 2022 · Verified</span>
+            </figcaption>
+          </figure>
+
+          <figure class="quote reveal">
+            <blockquote>
+              <p>I've hired Muhammad a few times, I'd highly recommend him. He's reliable,
+                professional and gets the work done to the highest standard every time. He even
+                gave me a few pointers outside the scope of the job to clean up parts of the app we
+                were working on, which was greatly appreciated. All code Muhammad did for me was
+                the highest quality and had no issues. His attention to detail and high standards
+                meant that everything worked first time and as it should. Communication was also
+                very good, he would reply very quickly which is always so important when working on
+                an app as a team. I'd recommend him for anything Ruby on Rails related.</p>
+            </blockquote>
+            <figcaption>
+              <span class="quote__who">Tom G.</span>
+              <span class="quote__meta">Nov 2021 · Verified</span>
+            </figcaption>
+          </figure>
+
+          <figure class="quote reveal">
+            <blockquote>
+              <p>Zahid has dilligently created a few beautiful web pages that have so far avoided
+                maintenance for quite a time. I recommend him for such customer facing projects.</p>
+            </blockquote>
+            <figcaption>
+              <span class="quote__who">Michal</span>
+              <span class="quote__meta">Migamake · Nov 2022 to Jun 2026 · 5.0</span>
+            </figcaption>
+          </figure>
+
+          <figure class="quote reveal">
+            <blockquote>
+              <p>The requested work was completed sooner than expected time. Zahid understood the
+                requirements well, he showed initiatives, and presented solutions. I'll definitely
+                prefer to work with him again.</p>
+            </blockquote>
+            <figcaption>
+              <span class="quote__who">Amit Ramanuj</span>
+              <span class="quote__meta">Mar 2025 · 5.0 · Reliable, Clear Communicator, Solution
+                Oriented</span>
+            </figcaption>
+          </figure>
+
+          <figure class="quote reveal">
+            <blockquote>
+              <p>Zahid was incredible from start to finish. Communication was great from start to
+                finish. I've worked with a few developers and this we far and away, the best
+                experience I have. Zahid and I will be working together in the near future!</p>
+            </blockquote>
+            <figcaption>
+              <span class="quote__who">Todd J.</span>
+              <span class="quote__meta">Business Operational Manager · Apr 2022 · Verified</span>
+            </figcaption>
+          </figure>
+
+          <figure class="quote reveal">
+            <blockquote>
+              <p>Zahid has been a thoughtful and helpful developer for our team. We'll continue to
+                use him to work on our sites.</p>
+            </blockquote>
+            <figcaption>
+              <span class="quote__who">Sunrise Environmental</span>
+              <span class="quote__meta">Jan 2026 · 5.0 · Collaborative, Accountable for
+                Outcomes</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <p class="meta-links meta-links--spaced">
+          <a href="https://www.upwork.com/freelancers/~019c0d895fbcb33693" rel="noopener">All
+            reviews on Upwork</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================ DEMO ============================ -->
+    <section class="section" id="demo" aria-labelledby="demo-h">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-head__no" aria-hidden="true">05</p>
+          <div class="section-head__body">
+            <span class="eyebrow">Live, in this page</span>
+            <h2 id="demo-h">Try it rather than take my word for it.</h2>
+            <p>This is my image-to-PDF tool, running right here. Everything happens in your browser.
+              no upload, no server, no account. Open the network tab and check.</p>
+          </div>
+        </div>
+
+        <div class="demo">
+          <div>
+            <div class="drop" id="drop">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M12 16V4M7 9l5-5 5 5" />
+                <path d="M20 16v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3" />
+              </svg>
+              <p>Drop images here, or choose files. They never leave this device.</p>
+              <label class="btn btn--ghost btn--file" for="files">
+                Choose images
+                <input type="file" id="files" accept="image/png,image/jpeg,image/webp" multiple
+                  class="vh">
+              </label>
+            </div>
+
+            <ul class="thumbs" id="thumbs" aria-label="Selected images"></ul>
+
+            <p class="demo__out" id="out" role="status" aria-live="polite"></p>
+
+            <div class="actions actions--tight">
+              <button class="btn btn--primary" id="make" type="button" disabled>Build PDF</button>
+              <button class="btn btn--ghost" id="clear" type="button" hidden>Clear</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="note">
+              <b class="note__h">Why this matters commercially</b>
+              <p>Most image-to-PDF sites upload your files to someone else's server. For anyone
+                handling contracts, invoices, medical records or IDs, that is the whole problem. Doing
+                the work client-side removes the liability instead of promising to look after it,
+                and it costs nothing to run, because there is nothing to run.</p>
+            </div>
+            <div class="note note--signal">
+              <b class="note__h">How it works</b>
+              <p>pdf-lib assembles the document in memory from a FileReader stream, embedding each
+                image and adding a page sized to it. The blob is handed straight to a download. No
+                fetch call exists in this code path.</p>
+            </div>
+            <ul class="stack stack--spaced">
+              <li>pdf-lib</li>
+              <li>FileReader</li>
+              <li>Zero backend</li>
+              <li>GitHub Pages</li>
+            </ul>
+            <p class="meta-links meta-links--spaced">
+              <a href="https://github.com/Ansarissab/free-secure-image-to-pdf-generator" rel="noopener">Source on
+                GitHub</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ INFRA ============================ -->
+    <section class="section" id="infra" aria-labelledby="infra-h">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-head__no" aria-hidden="true">06</p>
+          <div class="section-head__body">
+            <span class="eyebrow">Infrastructure</span>
+            <h2 id="infra-h">Three unrelated apps, one box, one proxy.</h2>
+            <p>A reference topology I maintain for Kamal 2: a FastAPI service, a Rails 8.1 app and a
+              WordPress install, each independently Dockerised, sharing one VM and routed by host
+              header. It is a deployment pattern, not a production system. Worth being clear about.</p>
+          </div>
+        </div>
+
+        <div class="arch reveal">
+          <svg viewBox="0 0 760 300" role="img" aria-labelledby="arch-t arch-d">
+            <title id="arch-t">Kamal multi-app deployment topology</title>
+            <desc id="arch-d">Internet traffic reaches a single virtual machine. kamal-proxy routes by
+              host header to three Dockerised apps on a shared Docker network: a FastAPI service at
+              kamal-deploy.local with PostgreSQL 17 on port 5432, a Rails 8.1 app at rails8.local with
+              PostgreSQL 17 on port 5433, and WordPress 6.9.1 at wordpress.local with MySQL 8 on port
+              3306 plus a phpMyAdmin sidecar on port 8081.</desc>
+
+            <!-- internet -->
+            <g class="arch-anim">
+              <rect class="arch-box" x="20" y="130" width="88" height="40" rx="4" />
+              <text class="arch-t" x="64" y="155" text-anchor="middle">Internet</text>
+            </g>
+
+            <!-- VM boundary -->
+            <rect x="140" y="14" width="600" height="272" rx="6" fill="none" stroke="var(--line)"
+              stroke-dasharray="3 4" />
+            <text class="arch-t arch-t--dim" x="150" y="30">Ubuntu VM · 172.16.189.131</text>
+
+            <!-- proxy -->
+            <g class="arch-anim">
+              <rect class="arch-box" x="164" y="126" width="104" height="48" rx="4" stroke="var(--accent)" />
+              <text class="arch-t arch-t--accent" x="216" y="146" text-anchor="middle">kamal-proxy</text>
+              <text class="arch-t arch-t--dim" x="216" y="162" text-anchor="middle">:80 · host header</text>
+            </g>
+            <path class="arch-edge arch-anim" d="M108 150 H164" marker-end="url(#a)" />
+
+            <!-- FastAPI -->
+            <g class="arch-anim">
+              <rect class="arch-box" x="340" y="34" width="150" height="52" rx="4" />
+              <text class="arch-t" x="352" y="54">FastAPI · :8000</text>
+              <text class="arch-t arch-t--dim" x="352" y="70">kamal-deploy.local</text>
+              <rect class="arch-box" x="530" y="34" width="190" height="52" rx="4" />
+              <text class="arch-t" x="542" y="54">PostgreSQL 17</text>
+              <text class="arch-t arch-t--dim" x="542" y="70">host :5432</text>
+            </g>
+            <path class="arch-edge arch-anim" d="M268 140 C 300 140, 306 60, 340 60" marker-end="url(#a)" />
+            <path class="arch-edge arch-anim" d="M490 60 H530" marker-end="url(#a)" />
+
+            <!-- Rails -->
+            <g class="arch-anim">
+              <rect class="arch-box" x="340" y="124" width="150" height="52" rx="4" />
+              <text class="arch-t" x="352" y="144">Rails 8.1 · Puma</text>
+              <text class="arch-t arch-t--dim" x="352" y="160">rails8.local · Solid Queue</text>
+              <rect class="arch-box" x="530" y="124" width="190" height="52" rx="4" />
+              <text class="arch-t" x="542" y="144">PostgreSQL 17</text>
+              <text class="arch-t arch-t--dim" x="542" y="160">host :5433 · no clash</text>
+            </g>
+            <path class="arch-edge arch-anim" d="M268 150 H340" marker-end="url(#a)" />
+            <path class="arch-edge arch-anim" d="M490 150 H530" marker-end="url(#a)" />
+
+            <!-- WordPress -->
+            <g class="arch-anim">
+              <rect class="arch-box" x="340" y="214" width="150" height="52" rx="4" />
+              <text class="arch-t" x="352" y="234">WordPress 6.9.1</text>
+              <text class="arch-t arch-t--dim" x="352" y="250">wordpress.local</text>
+              <rect class="arch-box" x="530" y="214" width="190" height="52" rx="4" />
+              <text class="arch-t" x="542" y="234">MySQL 8 · :3306</text>
+              <text class="arch-t arch-t--dim" x="542" y="250">phpMyAdmin sidecar :8081</text>
+            </g>
+            <path class="arch-edge arch-anim" d="M268 160 C 300 160, 306 240, 340 240" marker-end="url(#a)" />
+            <path class="arch-edge arch-anim" d="M490 240 H530" marker-end="url(#a)" />
+
+            <text class="arch-t arch-t--dim" x="150" y="278">shared docker network: kamal</text>
+
+            <defs>
+              <marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0 0 L8 4 L0 8 z" fill="var(--accent)" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+
+        <p class="meta-links meta-links--spaced">
+          <a href="https://github.com/Ansarissab/kamal-multi-app-deployment-examples" rel="noopener">Configs on
+            GitHub</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================ STACK ============================ -->
+    <section class="section" id="stack" aria-labelledby="stack-h">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-head__no" aria-hidden="true">07</p>
+          <div class="section-head__body">
+            <span class="eyebrow">Stack</span>
+            <h2 id="stack-h">What I reach for.</h2>
+            <p>Rails and Python are home. The rest is what the job needed.</p>
+          </div>
+        </div>
+
+        <div class="skills">
+          <div>
+            <h3>Backend</h3>
+            <ul>
+              <li>Ruby on Rails</li>
+              <li>Python · FastAPI</li>
+              <li>Next.js</li>
+              <li>GraphQL · REST</li>
+              <li>Sidekiq · Solid Queue</li>
+              <li>C# · Azure Functions</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Frontend</h3>
+            <ul>
+              <li>Hotwire · Turbo · Stimulus</li>
+              <li>React · TypeScript</li>
+              <li>Angular</li>
+              <li>Tailwind CSS</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Data</h3>
+            <ul>
+              <li>PostgreSQL · MySQL</li>
+              <li>Redis</li>
+              <li>MongoDB</li>
+              <li>Drizzle · D1</li>
+              <li>Firebase · Supabase</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Infrastructure</h3>
+            <ul>
+              <li>Kamal · Docker</li>
+              <li>Kubernetes · Helm</li>
+              <li>Terraform</li>
+              <li>AWS · Azure · Cloudflare</li>
+              <li>Hetzner · DigitalOcean</li>
+              <li>GitHub Actions · Jenkins</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Testing</h3>
+            <ul>
+              <li>RSpec · MiniTest</li>
+              <li>FactoryBot</li>
+              <li>Vitest · Playwright</li>
+              <li>axe-core</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Integrations</h3>
+            <ul>
+              <li>Stripe</li>
+              <li>Google OAuth</li>
+              <li>Twilio · SendGrid</li>
+              <li>Slack · BingAI</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CONTACT ============================ -->
+    <section class="section" id="contact" aria-labelledby="contact-h">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-head__no" aria-hidden="true">08</p>
+          <div class="section-head__body">
+            <span class="eyebrow">Contact</span>
+            <h2 id="contact-h">Tell me what is costing you money.</h2>
+          </div>
+        </div>
+
+        <div class="contact__grid">
+          <div>
+            <p class="lede">
+              I take contract work, and I am open to the right full-time role. If something is slow,
+              manual, expensive to run, or nobody wants to touch it any more. That is the kind of
+              problem I like.
+            </p>
+            <p class="muted prose-narrow prose-narrow--spaced">
+              Send the context and I will tell you what I would do, whether or not you hire me. Based
+              in Lahore, UTC+5, working comfortably with US and EU hours.
+            </p>
+            <div class="actions">
+              <a class="btn btn--primary" href="mailto:zahidensari116@gmail.com?subject=Project%20enquiry">
+                zahidensari116@gmail.com
+              </a>
+            </div>
+          </div>
+
+          <ul class="contact__links">
+            <li><a href="mailto:zahidensari116@gmail.com">Email
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <rect x="2.5" y="5" width="19" height="14" rx="2" />
+                  <path d="m3 7 9 6 9-6" />
+                </svg>
+              </a></li>
+            <li><a href="https://www.linkedin.com/in/zahidensari" rel="noopener">LinkedIn
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path
+                    d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.75-1.95C21.6 8.75 23 11 23 14.4V21h-4v-5.9c0-1.4-.03-3.2-2-3.2-2 0-2.3 1.5-2.3 3.1V21h-4V9Z" />
+                </svg>
+              </a></li>
+            <li><a href="https://github.com/Ansarissab" rel="noopener">GitHub
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path
+                    d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.69-.22.69-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03a9.5 9.5 0 0 1 5 0c1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" />
+                </svg>
+              </a></li>
+            <li><a href="https://www.upwork.com/freelancers/~019c0d895fbcb33693" rel="noopener">Upwork
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M7 17 17 7M9 7h8v8" />
+                </svg>
+              </a></li>
+            <li><a href="https://github.com/Ansarissab/Muhammad-Zahid-Resume" rel="noopener">Résumé
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
+                  <path d="M14 2v6h6M9 13h6M9 17h4" />
+                </svg>
+              </a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ftr">
+    <div class="wrap ftr__in">
+      <p>© <span id="yr">2026</span> Muhammad Zahid · Lahore, Pakistan</p>
+      <p>Hand-built. No framework, no tracker. <a href="llms.txt" class="lnk">llms.txt</a></p>
+    </div>
+  </footer>
+
+  <!-- defer preserves execution order: gsap -> plugin -> app -->
+  <script src="assets/js/gsap.min.js" defer></script>
+  <script src="assets/js/ScrollTrigger.min.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
 </body>
 
 </html>
