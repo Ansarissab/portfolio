@@ -1,0 +1,1491 @@
+/* =========================================================================
+   Muhammad Zahid - portfolio
+   Design system. Dark-first, one accent + one signal colour.
+   Signal (amber) is RESERVED for measured outcomes. Never decorative.
+   ========================================================================= */
+
+/* ---------- fonts: self-hosted, latin subset, no third-party request ------ */
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("../fonts/instrument-sans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../fonts/jetbrains-mono.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------- tokens ------------------------------------------------------- */
+:root {
+  /* neutrals - named, never "gray-800" */
+  --ink: #090d11;
+  --surface: #0f151b;
+  --surface-2: #141d25;
+  --line: #1e2831;
+  --line-strong: #2b3843;
+  --bone: #e9eef2;
+  --pewter: #b9c3cc;
+  --ash: #8593a0;
+
+  /* brand: cyan, taken from the MZ mark */
+  --accent: #2fd8ce;
+  --accent-deep: #14a79e;
+  --accent-soft: #7dede6;
+
+  /* signal: amber. ONLY measured outcomes. */
+  --signal: #ffa94d;
+  --signal-deep: #c2691a;
+
+  /* type */
+  --sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* fluid scale, 1.25 ratio */
+  --t-xs: 0.75rem;
+  --t-sm: 0.8125rem;
+  --t-base: clamp(0.975rem, 0.94rem + 0.16vw, 1.0625rem);
+  --t-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --t-xl: clamp(1.4rem, 1.2rem + 0.9vw, 2rem);
+  --t-2xl: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+  --t-3xl: clamp(2.6rem, 1.6rem + 4.4vw, 5.5rem);
+  --t-metric: clamp(2.4rem, 1.6rem + 3.4vw, 4.25rem);
+
+  /* base unit 4px */
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: 1rem;
+  --s6: 1.5rem;
+  --s8: 2rem;
+  --s12: 3rem;
+  --s16: 4rem;
+  --s20: 5rem;
+  --s24: 6rem;
+  --s32: 8rem;
+
+  /* two opposed radius systems */
+  --r-pill: 999px;
+  --r-sharp: 3px;
+  --r-card: 6px;
+
+  /* named eases - reused, never inline ease-in-out */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-mz: cubic-bezier(0.6, 0.04, 0.1, 1);
+  --dur-fast: 160ms;
+  --dur: 260ms;
+  --dur-slow: 420ms;
+
+  --wrap: 78rem;
+  --rail: 4.5rem;
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --ink: #f7f8f7;
+  --surface: #ffffff;
+  --surface-2: #f0f2f3;
+  --line: #dde3e8;
+  --line-strong: #c3ccd4;
+  --bone: #0b1116;
+  --pewter: #2f3b45;
+  --ash: #56646f;
+
+  /* darkened from the brand cyan until it clears 4.5:1 on every light
+     surface, including surface-2 (.lab:hover). #0b7d76 measured 4.44 there. */
+  --accent: #0a7770;
+  --accent-deep: #075e59;
+  --accent-soft: #075e59;
+
+  --signal: #a4520b;
+  --signal-deep: #7c3d06;
+
+  color-scheme: light;
+}
+
+/* Dark is the default, deliberately: the MZ mark, the OG card and the whole
+   palette are built for it. Light is a first-class mode, one click away, and
+   remembered - but it is opt-in rather than inherited from the OS. */
+
+/* ---------- reset -------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--sans);
+  font-size: var(--t-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r-sharp);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+/* ---------- type primitives ---------------------------------------------- */
+/* display type: tight negative tracking. labels: wide positive. never mixed. */
+.display {
+  font-size: var(--t-3xl);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--t-2xl);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: var(--t-xl);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+.lede {
+  font-size: var(--t-lg);
+  line-height: 1.5;
+  color: var(--pewter);
+  text-wrap: pretty;
+}
+
+.muted {
+  color: var(--ash);
+}
+
+/* ---------- layout ------------------------------------------------------- */
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.section {
+  padding-block: clamp(var(--s16), 10vw, var(--s32));
+  border-top: 1px solid var(--line);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: var(--rail) 1fr;
+  gap: var(--s4);
+  margin-bottom: var(--s12);
+}
+
+.section-head__no {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--accent);
+  padding-top: 0.5em;
+  letter-spacing: 0.1em;
+}
+
+.section-head__body > .eyebrow {
+  display: block;
+  margin-bottom: var(--s3);
+}
+
+.section-head__body > p {
+  max-width: 54ch;
+  margin-top: var(--s4);
+  color: var(--ash);
+}
+
+/* ---------- skip link ---------------------------------------------------- */
+.skip {
+  position: absolute;
+  left: var(--s4);
+  top: -100%;
+  z-index: 100;
+  padding: var(--s3) var(--s4);
+  background: var(--accent);
+  color: var(--ink);
+  font-weight: 600;
+  border-radius: var(--r-sharp);
+  transition: top var(--dur) var(--ease-out);
+}
+.skip:focus {
+  top: var(--s4);
+}
+
+/* ---------- header ------------------------------------------------------- */
+.hdr {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--ink) 82%, transparent);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur) var(--ease-out),
+    background var(--dur) var(--ease-out);
+}
+/* backdrop-filter only where supported; not load-bearing for legibility */
+@supports (backdrop-filter: blur(8px)) {
+  .hdr {
+    backdrop-filter: blur(10px);
+  }
+}
+.hdr[data-stuck="true"] {
+  border-bottom-color: var(--line);
+  background: color-mix(in srgb, var(--ink) 94%, transparent);
+}
+
+.hdr__in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  height: 4.25rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+}
+.brand svg {
+  width: 2rem;
+  height: 2rem;
+}
+.brand__txt {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.brand__txt span {
+  color: var(--ash);
+  font-weight: 400;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--s6);
+}
+/* Nav link fill. A block wipes up from the baseline behind the text while the
+   text inverts. Pure CSS, no JS. Technique credit: kevinpowell.co.
+   --ink is the page background in BOTH themes, so `color: var(--ink)` inverts
+   correctly either way: near-black on cyan (dark), near-white on teal (light).
+   Contrast measured at 10.99:1 dark / 5.08:1 light. */
+.nav a {
+  position: relative;
+  z-index: 0;
+  font-size: var(--t-sm);
+  color: var(--ash);
+  padding: 0.15em 0.4em;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: var(--r-sharp);
+  background: var(--accent);
+  transform-origin: bottom;
+  transform: scaleY(0);
+  transition: transform var(--dur-fast) var(--ease-mz);
+}
+.nav a:hover,
+.nav a:focus-visible {
+  color: var(--ink);
+}
+.nav a:hover::after,
+.nav a:focus-visible::after {
+  transform: scaleY(1);
+}
+/* The fill reads as a focus indicator, but it is a background - and backgrounds
+   are dropped in forced-colors mode. Keep the real ring so keyboard users are
+   never left without one. */
+.nav a:focus-visible {
+  outline-offset: 2px;
+}
+@media (forced-colors: active) {
+  .nav a::after {
+    display: none;
+  }
+}
+
+/* base first, override after. Reversing these silently breaks the mobile nav. */
+.nav__links {
+  display: flex;
+  gap: var(--s6);
+}
+@media (max-width: 54rem) {
+  .nav__links {
+    display: none;
+  }
+  .brand__txt span {
+    display: none;
+  }
+}
+
+/* theme toggle */
+.tgl {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  color: var(--ash);
+  transition: color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+.tgl:hover {
+  color: var(--bone);
+  border-color: var(--line-strong);
+}
+.tgl svg {
+  width: 1rem;
+  height: 1rem;
+}
+.tgl .i-moon {
+  display: none;
+}
+:root[data-theme="light"] .tgl .i-moon {
+  display: block;
+}
+:root[data-theme="light"] .tgl .i-sun {
+  display: none;
+}
+
+/* ---------- shared primitives -------------------------------------------
+   Named for what they ARE, not where they first appeared. Anything reused in
+   more than one section lives here rather than being restyled inline.
+   ------------------------------------------------------------------------- */
+
+/* screen-reader-only / visually hidden input */
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* a row of actions. hero, demo and contact all use this. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  margin-top: var(--s8);
+}
+.actions--tight {
+  margin-top: var(--s4);
+}
+
+/* inline link inside a paragraph. Underlined, so it never relies on colour
+   alone to read as a link (axe: link-in-text-block). */
+.lnk {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.lnk:hover {
+  color: var(--accent-soft);
+}
+
+/* small mono link row: labs, demo source, infra configs */
+.meta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s4);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.meta-links a {
+  color: var(--ash);
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 2px;
+  transition: color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+.meta-links a:hover,
+.meta-links a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.meta-links--spaced {
+  margin-top: var(--s6);
+}
+
+/* inline code */
+.code {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  color: var(--pewter);
+}
+
+/* callout note. --signal variant marks the technical explanation. */
+.note {
+  margin-top: var(--s6);
+  padding: var(--s4);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent);
+  border-radius: var(--r-sharp);
+  font-size: var(--t-sm);
+  color: var(--ash);
+}
+.note + .note {
+  margin-top: var(--s4);
+}
+.note--signal {
+  border-left-color: var(--signal);
+}
+.note__h {
+  display: block;
+  color: var(--pewter);
+  font-weight: 600;
+  margin-bottom: var(--s3);
+}
+
+.arrow-dim {
+  color: var(--ash);
+}
+.prose-narrow {
+  max-width: 52ch;
+}
+.prose-narrow--spaced {
+  margin-top: var(--s6);
+}
+
+/* ---------- reading progress --------------------------------------------
+   Sits above the header. Width comes from --read (0..1), written by JS.
+   ------------------------------------------------------------------------- */
+.prog {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: 2px;
+  background: transparent;
+  pointer-events: none;
+}
+.prog__bar {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent));
+  transform: scaleX(var(--read, 0));
+  transform-origin: left;
+  /* no transition: it must track the scrollbar exactly, not lag behind it */
+}
+
+/* ---------- testimonials -------------------------------------------------
+   Quotes are evidence, so they are typeset like evidence: the client's words
+   large and unornamented, attribution small and in mono. <mark> carries the
+   signal colour because those spans are the measured claims.
+   ------------------------------------------------------------------------- */
+.quote {
+  border-top: 1px solid var(--line);
+  padding-top: var(--s6);
+}
+.quote blockquote p {
+  color: var(--pewter);
+  text-wrap: pretty;
+}
+.quote mark {
+  background: none;
+  color: var(--signal);
+  font-weight: 600;
+}
+.quote figcaption {
+  margin-top: var(--s4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.quote__who {
+  font-weight: 600;
+  color: var(--bone);
+  font-size: var(--t-sm);
+}
+.quote__meta {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--ash);
+  letter-spacing: 0.02em;
+}
+
+/* the one quote with a revenue figure gets the room it deserves */
+.quote--lead {
+  border-top: 2px solid var(--signal);
+  margin-bottom: var(--s12);
+}
+.quote--lead blockquote p {
+  font-size: var(--t-xl);
+  line-height: 1.35;
+  letter-spacing: -0.018em;
+  color: var(--bone);
+  max-width: 46ch;
+}
+
+/* deliberately uneven: a wide column and a narrow one, not a tidy 3-up */
+.quotes {
+  columns: 2;
+  column-gap: var(--s12);
+}
+@media (max-width: 62rem) {
+  .quotes {
+    columns: 1;
+  }
+}
+.quotes .quote {
+  break-inside: avoid;
+  margin-bottom: var(--s8);
+  /* columns + transforms fight; reveal handles opacity only here */
+}
+
+/* ---------- hover-to-reveal (feature work tiles) -------------------------
+   The reveal shows the actual client site, so it is evidence rather than
+   decoration. Pointer-only: touch users get the text, which is the content.
+   ------------------------------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+  .peek {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 40;
+    width: 18rem;
+    pointer-events: none;
+    opacity: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: 0 24px 48px -12px rgb(0 0 0 / 0.5);
+    transform: translate3d(calc(var(--px, 0px) + 1.25rem), calc(var(--py, 0px) - 50%), 0)
+      scale(0.96);
+    transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+  }
+  .peek[data-on="true"] {
+    opacity: 1;
+    transform: translate3d(calc(var(--px, 0px) + 1.25rem), calc(var(--py, 0px) - 50%), 0) scale(1);
+  }
+  .peek img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top center;
+  }
+}
+
+/* ---------- buttons ------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  padding: 0.7rem 1.15rem;
+  border-radius: var(--r-pill);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  /* magnetic offset, written by JS as px. Zero by default and on touch. */
+  transform: translate3d(var(--magx, 0px), var(--magy, 0px), 0);
+  transition: transform var(--dur) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+/* while the cursor is inside, JS drives transform every frame: no transition,
+   or the button lags the pointer and feels broken rather than magnetic */
+.btn[data-mag="true"] {
+  transition: background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+.btn:active {
+  transform: translate3d(var(--magx, 0px), calc(var(--magy, 0px) + 1px), 0);
+}
+.btn--primary {
+  background: var(--accent);
+  color: #05201f;
+}
+:root[data-theme="light"] .btn--primary {
+  color: #ffffff;
+}
+.btn--primary:hover {
+  background: var(--accent-soft);
+}
+:root[data-theme="light"] .btn--primary:hover {
+  background: var(--accent-deep);
+}
+.btn--ghost {
+  border: 1px solid var(--line-strong);
+  color: var(--bone);
+}
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+/* a <label> acting as a button for a visually-hidden file input */
+.btn--file {
+  cursor: pointer;
+}
+.btn svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+/* ---------- hero --------------------------------------------------------- */
+.hero {
+  padding-block: clamp(var(--s16), 12vw, var(--s32)) var(--s16);
+}
+.hero__grid {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  gap: var(--s4);
+}
+@media (max-width: 46rem) {
+  .hero__grid,
+  .section-head {
+    grid-template-columns: 1fr;
+  }
+  .hero__rail {
+    display: none;
+  }
+}
+
+.hero__rail {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--ash);
+  writing-mode: vertical-rl;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding-top: var(--s2);
+}
+
+.hero .display {
+  margin-block: var(--s6) var(--s6);
+  max-width: 20ch;
+}
+/* the one place accent touches display type. a single word, not a gradient. */
+.hero .display em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero__lede {
+  max-width: 58ch;
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s4);
+  margin-top: var(--s8);
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--ash);
+}
+.hero__meta li {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+}
+.hero__meta li + li::before {
+  content: "";
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--line-strong);
+  margin-right: var(--s2);
+}
+.dot-live {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dot-live {
+    animation: pulse 2.4s var(--ease-out) infinite;
+  }
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+  50% {
+    opacity: 0.75;
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+}
+
+/* ---------- ledger (headline metrics) ------------------------------------ */
+.ledger {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  margin-top: var(--s16);
+}
+@media (max-width: 46rem) {
+  .ledger {
+    grid-template-columns: 1fr;
+  }
+}
+.ledger__item {
+  padding: var(--s8) var(--s6) var(--s8) 0;
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 46.001rem) {
+  .ledger__item + .ledger__item {
+    padding-left: var(--s6);
+    border-left: 1px solid var(--line);
+  }
+}
+
+.metric {
+  font-family: var(--mono);
+  font-size: var(--t-metric);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--signal);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 0.05em;
+}
+.metric__unit {
+  font-size: 0.42em;
+  letter-spacing: 0;
+}
+
+/* Some outcomes are a phrase, not a number ("Days -> seconds"). Mono numeral
+   tracking mangles words, so those get the sans face at normal tracking. */
+.metric--text {
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  line-height: 1.1;
+  display: block;
+}
+.metric__label {
+  margin-top: var(--s3);
+  font-size: var(--t-sm);
+  color: var(--pewter);
+  max-width: 24ch;
+}
+.metric__src {
+  margin-top: var(--s2);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--ash);
+}
+
+/* ---------- case studies: ledger rows, not cards -------------------------- */
+.cases {
+  border-top: 1px solid var(--line);
+}
+
+.case {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--s4) var(--s8);
+  padding-block: var(--s12);
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+@media (max-width: 62rem) {
+  .case {
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+  }
+  .case__shot {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 46rem) {
+  .case {
+    grid-template-columns: 1fr;
+    gap: var(--s4);
+  }
+}
+
+.case__no {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  padding-top: 0.4em;
+}
+@media (max-width: 46rem) {
+  .case__no {
+    color: var(--ash);
+  }
+}
+
+.case__body > .eyebrow {
+  display: block;
+  margin-bottom: var(--s2);
+}
+.case__title {
+  display: block;
+}
+/* the arrow must ride the last word, never orphan onto its own line */
+.case__title a {
+  display: inline;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size var(--dur) var(--ease-out);
+}
+.case__title a:hover,
+.case__title a:focus-visible {
+  background-size: 100% 1px;
+}
+.case__title svg {
+  display: inline-block;
+  vertical-align: baseline;
+  width: 0.62em;
+  height: 0.62em;
+  margin-left: 0.28em;
+  color: var(--ash);
+  transition: transform var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.case__title a:hover svg {
+  transform: translate(2px, -2px);
+  color: var(--accent);
+}
+
+.case__desc {
+  margin-top: var(--s3);
+  color: var(--ash);
+  max-width: 56ch;
+}
+
+/* outcome: the actual point of the page */
+.case__outcome {
+  margin-top: var(--s6);
+  padding-left: var(--s4);
+  border-left: 2px solid var(--signal);
+}
+.case__outcome .metric {
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+}
+.case__outcome p {
+  margin-top: var(--s2);
+  font-size: var(--t-sm);
+  color: var(--pewter);
+  max-width: 42ch;
+}
+
+.case__role {
+  margin-top: var(--s6);
+  font-size: var(--t-sm);
+  color: var(--ash);
+}
+.case__role b {
+  color: var(--pewter);
+  font-weight: 600;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  margin-top: var(--s4);
+}
+.stack li {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  padding: 0.28rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  color: var(--ash);
+}
+.stack--spaced {
+  margin-top: var(--s6);
+}
+
+/* screenshot: desaturated at rest, alive on hover. no lightbox lib. */
+.case__shot {
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--surface);
+}
+.case__shot img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+  filter: saturate(0.72) brightness(0.9) contrast(1.02);
+  transform: scale(1.005);
+  transition: filter var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+}
+.case:hover .case__shot img,
+.case__shot a:focus-visible img {
+  filter: saturate(1) brightness(1) contrast(1);
+  transform: scale(1.03);
+}
+:root[data-theme="light"] .case__shot img {
+  filter: saturate(0.8) brightness(0.98);
+}
+
+/* ---------- labs strip --------------------------------------------------- */
+.labs {
+  display: grid;
+  /* deliberately uneven tracks */
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  overflow: hidden;
+}
+@media (max-width: 62rem) {
+  .labs {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 40rem) {
+  .labs {
+    grid-template-columns: 1fr;
+  }
+}
+.lab {
+  background: var(--surface);
+  padding: var(--s6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  transition: background var(--dur) var(--ease-out);
+}
+.lab:hover {
+  background: var(--surface-2);
+}
+.lab__ico {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--accent);
+}
+.lab h3 {
+  font-size: var(--t-lg);
+}
+.lab p {
+  font-size: var(--t-sm);
+  color: var(--ash);
+  flex: 1;
+}
+/* ---------- live demo ---------------------------------------------------- */
+.demo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s8);
+  align-items: start;
+}
+@media (max-width: 62rem) {
+  .demo {
+    grid-template-columns: 1fr;
+  }
+}
+
+.drop {
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-card);
+  background: var(--surface);
+  padding: var(--s12) var(--s6);
+  text-align: center;
+  transition: border-color var(--dur) var(--ease-out),
+    background var(--dur) var(--ease-out);
+}
+.drop[data-over="true"] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+}
+.drop svg {
+  width: 2rem;
+  height: 2rem;
+  margin-inline: auto;
+  color: var(--ash);
+  margin-bottom: var(--s4);
+}
+.drop p {
+  font-size: var(--t-sm);
+  color: var(--ash);
+  margin-bottom: var(--s4);
+}
+
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: var(--s2);
+  margin-top: var(--s4);
+}
+.thumbs:empty {
+  display: none;
+}
+.thumb {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sharp);
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumb button {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 1.15rem;
+  height: 1.15rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 80%, transparent);
+  color: var(--bone);
+  font-size: 0.7rem;
+  line-height: 1;
+}
+.thumb button:hover {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+.demo__out {
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  color: var(--ash);
+  margin-top: var(--s4);
+  min-height: 1.5em;
+}
+.demo__out b {
+  color: var(--signal);
+}
+
+/* ---------- architecture diagram ----------------------------------------- */
+.arch {
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--surface);
+  padding: var(--s8) var(--s6);
+  overflow-x: auto;
+}
+.arch svg {
+  width: 100%;
+  min-width: 34rem;
+  height: auto;
+}
+.arch-box {
+  fill: var(--surface-2);
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+.arch-edge {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+.arch-t {
+  font-family: var(--mono);
+  font-size: 11px;
+  fill: var(--bone);
+}
+.arch-t--dim {
+  fill: var(--ash);
+  font-size: 9.5px;
+}
+.arch-t--accent {
+  fill: var(--accent);
+}
+
+/* ---------- stack grid --------------------------------------------------- */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--s8) var(--s12);
+}
+.skills h3 {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: var(--s3);
+  margin-bottom: var(--s3);
+  border-bottom: 1px solid var(--line);
+}
+.skills li {
+  font-size: var(--t-sm);
+  color: var(--pewter);
+  padding-block: 0.2rem;
+}
+
+/* ---------- contact ------------------------------------------------------ */
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--s12);
+  align-items: start;
+}
+@media (max-width: 62rem) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+  }
+}
+.contact__links {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.contact__links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  padding-block: var(--s4);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  color: var(--pewter);
+  transition: color var(--dur-fast) var(--ease-out),
+    padding-left var(--dur) var(--ease-out);
+}
+.contact__links a:hover {
+  color: var(--accent);
+  padding-left: var(--s2);
+}
+.contact__links svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex: none;
+}
+
+/* ---------- footer ------------------------------------------------------- */
+.ftr {
+  border-top: 1px solid var(--line);
+  padding-block: var(--s8);
+}
+.ftr__in {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s4);
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--ash);
+}
+
+/* ---------- parallax + pointer ------------------------------------------
+   Restraint is the point. Depth is carried by a slow-moving grid and a light
+   that follows the cursor - not by tilting cards or a custom cursor. All of it
+   is opt-in behind prefers-reduced-motion and fine-pointer checks.
+   ------------------------------------------------------------------------- */
+
+/* The field: a faint engineering grid that drifts as you scroll. Fixed, so it
+   parallaxes against the content for free - no scroll listener needed. */
+.field {
+  position: fixed;
+  inset: -20vh 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  /* fade the grid out toward the edges so it never reads as a table */
+  -webkit-mask-image: radial-gradient(120% 80% at 50% 0%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(120% 80% at 50% 0%, #000 0%, transparent 72%);
+  transform: translate3d(0, calc(var(--sy, 0) * -28px), 0);
+  will-change: transform;
+}
+:root[data-theme="light"] .field {
+  opacity: 0.7;
+}
+
+/* The pointer light. One soft radial that trails the cursor, tinted brand
+   cyan. Sits under the content, so text never loses contrast. */
+.glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 46rem;
+  height: 46rem;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--accent) 13%, transparent) 0%,
+    transparent 62%
+  );
+  /* JS only reports where the cursor is; CSS decides what that means. */
+  transform: translate3d(calc(var(--gx, 50vw) - 50%), calc(var(--gy, 50vh) - 50%), 0);
+  transition: opacity 600ms var(--ease-out);
+  will-change: transform;
+}
+.glow[data-on="true"] {
+  opacity: 1;
+}
+:root[data-theme="light"] .glow {
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--accent) 9%, transparent) 0%,
+    transparent 62%
+  );
+}
+
+/* content must sit above the field/glow */
+.hdr,
+main,
+.ftr {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero depth is applied per-layer further down, not on the grid itself.
+   Transforming both would compound the offsets and shove the copy off-screen. */
+.hero__grid {
+  will-change: transform;
+}
+
+/* Screenshots drift within their frame as the row crosses the viewport.
+   --p is set per-case from -0.5..0.5 by the scroll handler. */
+.case__shot img {
+  transform: scale(1.06) translate3d(0, calc(var(--p, 0) * 16px), 0);
+}
+.case:hover .case__shot img,
+.case__shot a:focus-visible img {
+  transform: scale(1.1) translate3d(0, calc(var(--p, 0) * 16px), 0);
+}
+
+/* Pointer-reactive lift. Only on devices with a real cursor: a touch user
+   gets none of this and loses nothing. */
+@media (hover: hover) and (pointer: fine) {
+  .lab {
+    position: relative;
+  }
+  /* a cyan wash that follows the cursor across the tile */
+  .lab::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      18rem circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in srgb, var(--accent) 10%, transparent),
+      transparent 42%
+    );
+    transition: opacity var(--dur) var(--ease-out);
+  }
+  .lab:hover::before,
+  .lab:focus-within::before {
+    opacity: 1;
+  }
+  .lab > * {
+    position: relative;
+  }
+}
+
+/* Hero layers drift at different rates, so the block gains depth rather than
+   sliding as one plate. Values are small on purpose: 8px to 34px across the
+   whole first viewport. Anything more and the text fights the reader. */
+.hero__rail {
+  transform: translate3d(0, calc(var(--sy, 0) * 34px), 0);
+}
+.hero .eyebrow {
+  display: block;
+  transform: translate3d(0, calc(var(--sy, 0) * 30px), 0);
+}
+.hero .display {
+  transform: translate3d(0, calc(var(--sy, 0) * 8px), 0);
+}
+.hero__lede {
+  transform: translate3d(0, calc(var(--sy, 0) * 18px), 0);
+}
+.hero .actions {
+  transform: translate3d(0, calc(var(--sy, 0) * 26px), 0);
+}
+.hero__meta {
+  transform: translate3d(0, calc(var(--sy, 0) * 32px), 0);
+}
+/* the ledger rises slightly as the hero leaves */
+.ledger {
+  transform: translate3d(0, calc(var(--sy, 0) * -10px), 0);
+}
+
+/* Everything above is decoration. Strip it entirely when asked. */
+@media (prefers-reduced-motion: reduce) {
+  .field,
+  .glow,
+  .peek {
+    display: none;
+  }
+  .hero__grid,
+  .hero__rail,
+  .hero .eyebrow,
+  .hero .display,
+  .hero__lede,
+  .hero .actions,
+  .hero__meta,
+  .ledger,
+  .btn,
+  .case:hover .case__shot img {
+    transform: none;
+  }
+  .case__shot img {
+    transform: scale(1.02);
+  }
+  /* .prog stays: a 2px bar tracking the scrollbar is information, not motion. */
+}
+
+/* ---------- motion ------------------------------------------------------- */
+/* JS adds .is-in; CSS owns the transition. Content is visible without JS. */
+.reveal {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity var(--dur-slow) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out);
+  }
+  html.js .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- print: recruiters print things ------------------------------- */
+@media print {
+  .hdr,
+  .tgl,
+  .actions,
+  #demo,
+  .skip {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+  .section {
+    padding-block: 1.5rem;
+    break-inside: avoid;
+  }
+  .case {
+    break-inside: avoid;
+  }
+  .metric {
+    color: #000;
+  }
+  a::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #555;
+  }
+}
