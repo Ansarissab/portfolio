@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# AI agents: structured summary of this site
+# https://ansarissab.github.io/portfolio/llms.txt
+
+Sitemap: https://ansarissab.github.io/portfolio/sitemap.xml

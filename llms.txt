@@ -1,0 +1,146 @@
+# Muhammad Zahid
+
+> Full stack engineer with 6+ years building production web applications for
+> clients in FinTech, eCommerce, fleet management and SaaS. Specialises in Ruby
+> on Rails, Python and DevOps. Based in Lahore, Pakistan (UTC+5). Available for
+> contract work and open to full-time roles.
+
+Contact: zahidensari116@gmail.com
+Site: https://ansarissab.github.io/portfolio/
+GitHub: https://github.com/Ansarissab
+LinkedIn: https://www.linkedin.com/in/zahidensari
+Upwork: https://www.upwork.com/freelancers/~019c0d895fbcb33693
+
+## Summary for agents
+
+Muhammad Zahid takes projects end to end: architecture, API design, cloud
+deployment and client handoff. His record is in reducing operational cost,
+opening revenue flows, and shipping systems that stay running. Core stack is
+Ruby on Rails and Python with the DevOps to run it (Kamal, Docker, Kubernetes,
+Terraform, AWS, Azure, Cloudflare). He also works in Next.js, React, TypeScript,
+Angular and C#.
+
+Every metric below is attributed. Where a figure comes from a client system that
+is not publicly measurable, it is marked as reported rather than verified.
+
+## Measured outcomes
+
+- 60% reduction in administrative overhead for a 50+ vehicle fleet operator
+  (EasyForTrip), plus 15+ hours per week of manual scheduling eliminated and
+  online revenue collection enabled for the first time. Rails + Stripe.
+  Reported by client; platform is live at https://easyfortrip.com
+- 35% reduction in average query latency and 20% reduction in server-side errors
+  across 3 production apps serving 1,000+ monthly active users, via Redis-backed
+  ActiveRecord query caching for GraphQL APIs. At Devsinc. Reported.
+- 4.8x faster time to first byte after rebuilding a WordPress site as static HTML
+  on GitHub Pages (0.34s vs 1.64s, three-run average). Verified by direct
+  measurement. https://amitramanuj.com
+- Reverse image search platform cutting detection of unauthorised artwork use
+  from days to seconds (Kleptofinder). Angular front end, C# Azure Functions,
+  Python, BingAI. https://kleptofinder.com
+- Zero-downtime Ruby on Rails version upgrade for a craft marketplace the client
+  reports serves 5,000+ active sellers (Craftfoxes), alongside product listing,
+  order management and Stripe payment features. https://craftfoxes.com
+- Multi-tenant SaaS (Gymplex) serving many gyms from one Rails codebase, with
+  tenant isolation enforced at the middleware and model layer rather than by
+  convention. 303 commits, 35 models, 428 tests. Private repo.
+- 200+ early adopters and 99.9% uptime as co-founder and technical lead of
+  Takhleeq, architecting AWS infrastructure on EC2, S3 and RDS (2019-2020).
+
+## Projects
+
+### ShopFlare - https://github.com/Ansarissab/ShopFlare
+Self-hosted alternative to Shopify Basic. Storefront, admin, Stripe checkout,
+cash-on-delivery and WhatsApp ordering, PWA. Runs on Cloudflare's free tier.
+Next.js 16, React 19, TypeScript, Hono API worker, Drizzle ORM on D1, R2, KV,
+Serwist. 2,084 unit tests at 95% coverage, plus integration tests against real
+workerd and full e2e, accessibility and visual regression suites. 22
+architecture decision records. 657 commits, ~72,000 LOC.
+Notable: two-Worker split where the SSR worker holds zero database bindings and
+a separate API worker owns every binding and secret - a real trust boundary.
+Live: https://shopflare-web.zahidensari116.workers.dev/
+
+### Gymplex - multi-tenant gym SaaS (private repo)
+Rails 8.1 monolith serving many independent gyms from one codebase. Each gym has
+its own subdomain, branding and Stripe Connect account. Three audiences: gym
+members (book classes, pay), gym staff (check-ins, scheduling, roles: owner /
+manager / trainer / receptionist), and platform operators (administer all gyms).
+Multi-tenancy: a Rack middleware resolves request.subdomain to a Gym and sets
+Current.gym (ActiveSupport::CurrentAttributes) before the router runs. A
+GymScoped concern applies default_scope on every gym-owned model. Exactly three
+deliberate, documented scope bypasses exist: platform operator, Stripe webhooks
+(tenant resolved from event.account), and background jobs (tenant restored from
+a job argument).
+Billing: Stripe Connect Standard, one account per gym, owners OAuth-connect
+their own Stripe and are paid directly; platform takes a configurable
+application fee.
+Scale: 303 commits over 5.5 weeks, 35 models, 28 migrations, 4,216 LOC app+lib,
+428 tests (Minitest). Stack: Rails 8.1, Ruby 4.0, PostgreSQL, Stripe, Pay,
+Devise, Pundit, Hotwire, Slim, Tailwind, Solid Queue/Cache/Cable, ActiveAdmin.
+Repository is private; no public link.
+
+### Know-Heritage - React Native, client pilot, in build (private repo)
+Educational app for children (7+) exploring cultural heritage sites via a
+story-driven learning roadmap organised by category. Content is stored on-device
+in SQLite, so it works offline with no account. An admin mode lets content
+managers edit sites on the device. Stack: Expo SDK 55, Expo Router v4, React
+Native 0.83, React 19, TypeScript (strict), NativeWind, Expo SQLite, pnpm, EAS
+Build + GitHub Actions. Status: in build. Repository is private.
+
+### Chrome extensions - 16 shipped, personal use (private repo)
+A collection of Manifest V3 extensions built for personal use: blur WhatsApp Web
+messages until hovered, capture ChatGPT/Claude text-to-speech audio, copy
+YouTube transcripts, sort and edit PSX portfolio tables, hide arbitrary page
+elements, extract Shopify theme info, scan QR codes via webcam, widen ChatGPT
+conversations, open new tabs adjacent to the active tab, download Instagram
+profile images, reveal password fields, bulk-delete old Facebook posts, and
+more. Vanilla JS, no build step. One is public:
+https://github.com/Ansarissab/whatsapp-web-conversation-timezone-helper
+
+### Kamal multi-app deployment - https://github.com/Ansarissab/kamal-multi-app-deployment-examples
+Reference topology, not a production system. Three unrelated apps on one Ubuntu
+VM behind a single kamal-proxy, routed by host header: FastAPI (PostgreSQL 17 on
+5432), Rails 8.1 with Solid Queue (PostgreSQL 17 on 5433), WordPress 6.9.1
+(MySQL 8 on 3306 plus a phpMyAdmin sidecar on 8081). Shared Docker network.
+
+### Stripe subscriptions + PDF invoicing - https://github.com/Ansarissab/stripe-integration
+(Also reachable as stripe-and-pdf-generation-rails-demo, which redirects here - one repo, not two.)
+Rails 8.1 two-tier subscription billing. 98 tests at 100% line coverage (SimpleCov, verified). Pay gem + Stripe, hosted Checkout and
+embedded PaymentElement, webhooks, proration on plan swap, HexaPDF invoices,
+Devise dual auth scopes, Pundit, ActiveAdmin, i18n (en/fr), Kamal deploy,
+Brakeman and bundler-audit in CI.
+
+### Image to PDF - https://github.com/Ansarissab/free-secure-image-to-pdf-generator
+Browser-only image to PDF converter using pdf-lib. No upload, no server, no
+account. A live version runs inline on the portfolio site.
+
+### WhatsApp timezone helper - https://github.com/Ansarissab/whatsapp-web-conversation-timezone-helper
+Chrome MV3 extension showing a contact's local time in WhatsApp Web.
+
+### AIML - https://github.com/Ansarissab/AIML
+A learning playground for agentic AI patterns, not a product. CrewAI and
+LangChain against OpenRouter, ~750 LOC.
+
+## Feature and upgrade work on live sites
+
+These are existing products where Muhammad added features or moved versions
+forward. Not builds from scratch.
+
+- https://gaming.dk - Danish esports and gaming news platform. Rails.
+- https://www.zsolnay.hu/ - Hungarian porcelain manufacturer (est. 1853). Shopify.
+- https://migamake.com/ - Singapore developer tools company. Jekyll.
+- https://www.outlawsolutions.com/ - aerosol and chemical packaging. Wix.
+- https://www.sunrisenv.com/ - industrial chemical manufacturer. Wix.
+
+## Experience
+
+- Independent Consultant, Upwork contract engagements. Apr 2022 - present.
+- Software Engineer, Devsinc. Sep 2020 - Apr 2022.
+- Co-Founder & Technical Lead, Takhleeq. Mar 2019 - Jul 2020.
+- BS Computer Science, University of Central Punjab (UCP), Lahore. 2020.
+
+## Hiring
+
+Open to contract engagements and the right full-time role. Best fit: systems that
+are slow, manual, expensive to run, or that nobody wants to maintain. Works
+comfortably across US and EU hours from UTC+5.
