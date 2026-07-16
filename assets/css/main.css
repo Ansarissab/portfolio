@@ -1,10 +1,5 @@
-/* =========================================================================
-   Muhammad Zahid - portfolio
-   Design system. Dark-first, one accent + one signal colour.
-   Signal (amber) is RESERVED for measured outcomes. Never decorative.
-   ========================================================================= */
+/* Design system. Amber (--signal) is reserved for measured outcomes only. */
 
-/* ---------- fonts: self-hosted, latin subset, no third-party request ------ */
 @font-face {
   font-family: "Instrument Sans";
   src: url("../fonts/instrument-sans.woff2") format("woff2");
@@ -26,9 +21,9 @@
     U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* ---------- tokens ------------------------------------------------------- */
+/* tokens */
 :root {
-  /* neutrals - named, never "gray-800" */
+
   --ink: #090d11;
   --surface: #0f151b;
   --surface-2: #141d25;
@@ -38,48 +33,42 @@
   --pewter: #b9c3cc;
   --ash: #8593a0;
 
-  /* brand: cyan, taken from the MZ mark */
   --accent: #2fd8ce;
   --accent-deep: #14a79e;
   --accent-soft: #7dede6;
 
-  /* signal: amber. ONLY measured outcomes. */
   --signal: #ffa94d;
   --signal-deep: #c2691a;
 
-  /* type */
   --sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* fluid scale, 1.25 ratio */
   --t-xs: 0.75rem;
   --t-sm: 0.8125rem;
-  --t-base: clamp(0.975rem, 0.94rem + 0.16vw, 1.0625rem);
+  --t-base: clamp(1rem, 0.97rem + 0.16vw, 1.0625rem);
   --t-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
   --t-xl: clamp(1.4rem, 1.2rem + 0.9vw, 2rem);
   --t-2xl: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
   --t-3xl: clamp(2.6rem, 1.6rem + 4.4vw, 5.5rem);
   --t-metric: clamp(2.4rem, 1.6rem + 3.4vw, 4.25rem);
 
-  /* base unit 4px */
   --s1: 0.25rem;
   --s2: 0.5rem;
   --s3: 0.75rem;
   --s4: 1rem;
   --s6: 1.5rem;
   --s8: 2rem;
+  --s10: 2.5rem;
   --s12: 3rem;
   --s16: 4rem;
   --s20: 5rem;
   --s24: 6rem;
   --s32: 8rem;
 
-  /* two opposed radius systems */
   --r-pill: 999px;
   --r-sharp: 3px;
   --r-card: 6px;
 
-  /* named eases - reused, never inline ease-in-out */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-mz: cubic-bezier(0.6, 0.04, 0.1, 1);
   --dur-fast: 160ms;
@@ -102,8 +91,7 @@
   --pewter: #2f3b45;
   --ash: #56646f;
 
-  /* darkened from the brand cyan until it clears 4.5:1 on every light
-     surface, including surface-2 (.lab:hover). #0b7d76 measured 4.44 there. */
+  /* 4.5:1 on every light surface; #0b7d76 measured 4.44 on surface-2 */
   --accent: #0a7770;
   --accent-deep: #075e59;
   --accent-soft: #075e59;
@@ -118,7 +106,7 @@
    palette are built for it. Light is a first-class mode, one click away, and
    remembered - but it is opt-in rather than inherited from the OS. */
 
-/* ---------- reset -------------------------------------------------------- */
+/* reset */
 *,
 *::before,
 *::after {
@@ -166,6 +154,12 @@ button {
   cursor: pointer;
 }
 
+/* .btn sets its own display; without !important that beats the UA [hidden]
+   rule at equal specificity and the element stays visible. */
+[hidden] {
+  display: none !important;
+}
+
 ul,
 ol {
   list-style: none;
@@ -182,8 +176,7 @@ ol {
   color: var(--ink);
 }
 
-/* ---------- type primitives ---------------------------------------------- */
-/* display type: tight negative tracking. labels: wide positive. never mixed. */
+/* type */
 .display {
   font-size: var(--t-3xl);
   font-weight: 600;
@@ -227,7 +220,7 @@ h3 {
   color: var(--ash);
 }
 
-/* ---------- layout ------------------------------------------------------- */
+/* layout */
 .wrap {
   width: 100%;
   max-width: var(--wrap);
@@ -266,7 +259,6 @@ h3 {
   color: var(--ash);
 }
 
-/* ---------- skip link ---------------------------------------------------- */
 .skip {
   position: absolute;
   left: var(--s4);
@@ -283,7 +275,27 @@ h3 {
   top: var(--s4);
 }
 
-/* ---------- header ------------------------------------------------------- */
+/* visually hidden but screen-reader and keyboard reachable; used on the
+   native file input inside .btn--file so its own intrinsic width never
+   forces the parent label or grid track to grow. */
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.btn--file:has(.vh:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r-sharp);
+}
+
+/* header */
 .hdr {
   position: sticky;
   top: 0;
@@ -293,7 +305,7 @@ h3 {
   transition: border-color var(--dur) var(--ease-out),
     background var(--dur) var(--ease-out);
 }
-/* backdrop-filter only where supported; not load-bearing for legibility */
+
 @supports (backdrop-filter: blur(8px)) {
   .hdr {
     backdrop-filter: blur(10px);
@@ -335,11 +347,8 @@ h3 {
   align-items: center;
   gap: var(--s6);
 }
-/* Nav link fill. A block wipes up from the baseline behind the text while the
-   text inverts. Pure CSS, no JS. Technique credit: kevinpowell.co.
-   --ink is the page background in BOTH themes, so `color: var(--ink)` inverts
-   correctly either way: near-black on cyan (dark), near-white on teal (light).
-   Contrast measured at 10.99:1 dark / 5.08:1 light. */
+/* Nav fill wipes up behind the text. --ink is the page bg in both themes, so
+   color:var(--ink) self-inverts. Technique: kevinpowell.co */
 .nav a {
   position: relative;
   z-index: 0;
@@ -367,9 +376,7 @@ h3 {
 .nav a:focus-visible::after {
   transform: scaleY(1);
 }
-/* The fill reads as a focus indicator, but it is a background - and backgrounds
-   are dropped in forced-colors mode. Keep the real ring so keyboard users are
-   never left without one. */
+/* forced-colors drops backgrounds, so keep the real ring */
 .nav a:focus-visible {
   outline-offset: 2px;
 }
@@ -379,7 +386,7 @@ h3 {
   }
 }
 
-/* base first, override after. Reversing these silently breaks the mobile nav. */
+/* base first, override after: reversing breaks the mobile nav */
 .nav__links {
   display: flex;
   gap: var(--s6);
@@ -409,39 +416,23 @@ h3 {
   color: var(--bone);
   border-color: var(--line-strong);
 }
+/* 44px minimum touch target below tablet width */
+@media (max-width: 50rem) {
+  .tgl {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
 .tgl svg {
   width: 1rem;
   height: 1rem;
 }
-.tgl .i-moon {
-  display: none;
-}
-:root[data-theme="light"] .tgl .i-moon {
-  display: block;
-}
-:root[data-theme="light"] .tgl .i-sun {
-  display: none;
+#tgl-rays {
+  transition: opacity var(--dur) var(--ease-out);
 }
 
-/* ---------- shared primitives -------------------------------------------
-   Named for what they ARE, not where they first appeared. Anything reused in
-   more than one section lives here rather than being restyled inline.
-   ------------------------------------------------------------------------- */
 
-/* screen-reader-only / visually hidden input */
-.vh {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* a row of actions. hero, demo and contact all use this. */
+/* shared primitives */
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -452,8 +443,7 @@ h3 {
   margin-top: var(--s4);
 }
 
-/* inline link inside a paragraph. Underlined, so it never relies on colour
-   alone to read as a link (axe: link-in-text-block). */
+/* underlined so it never relies on colour alone (axe: link-in-text-block) */
 .lnk {
   color: var(--accent);
   text-decoration: underline;
@@ -465,7 +455,6 @@ h3 {
   color: var(--accent-soft);
 }
 
-/* small mono link row: labs, demo source, infra configs */
 .meta-links {
   display: flex;
   flex-wrap: wrap;
@@ -491,14 +480,12 @@ h3 {
   margin-top: var(--s6);
 }
 
-/* inline code */
 .code {
   font-family: var(--mono);
   font-size: 0.82em;
   color: var(--pewter);
 }
 
-/* callout note. --signal variant marks the technical explanation. */
 .note {
   margin-top: var(--s6);
   padding: var(--s4);
@@ -506,6 +493,7 @@ h3 {
   border-left: 2px solid var(--accent);
   border-radius: var(--r-sharp);
   font-size: var(--t-sm);
+  line-height: 1.6;
   color: var(--ash);
 }
 .note + .note {
@@ -531,38 +519,29 @@ h3 {
   margin-top: var(--s6);
 }
 
-/* ---------- reading progress --------------------------------------------
-   Sits above the header. Width comes from --read (0..1), written by JS.
-   ------------------------------------------------------------------------- */
+/* reading progress; --read is 0..1 from JS */
 .prog {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 60;
-  height: 2px;
-  background: transparent;
+  height: 3px;
+  background: color-mix(in srgb, var(--line) 60%, transparent);
   pointer-events: none;
 }
 .prog__bar {
   display: block;
   height: 100%;
   width: 100%;
-  background: linear-gradient(90deg, var(--accent-deep), var(--accent));
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent), var(--signal));
   transform: scaleX(var(--read, 0));
   transform-origin: left;
-  /* no transition: it must track the scrollbar exactly, not lag behind it */
 }
 
-/* ---------- testimonials -------------------------------------------------
-   Quotes are evidence, so they are typeset like evidence: the client's words
-   large and unornamented, attribution small and in mono. <mark> carries the
-   signal colour because those spans are the measured claims.
-   ------------------------------------------------------------------------- */
-.quote {
-  border-top: 1px solid var(--line);
-  padding-top: var(--s6);
-}
+/* testimonials; <mark> carries --signal because those are the measured claims */
 .quote blockquote p {
   color: var(--pewter);
+  font-size: var(--t-base);
+  line-height: 1.65;
   text-wrap: pretty;
 }
 .quote mark {
@@ -586,41 +565,135 @@ h3 {
   font-size: 0.6875rem;
   color: var(--ash);
   letter-spacing: 0.02em;
+  line-height: 1.5;
 }
 
-/* the one quote with a revenue figure gets the room it deserves */
 .quote--lead {
   border-top: 2px solid var(--signal);
+  padding-top: var(--s6);
   margin-bottom: var(--s12);
 }
 .quote--lead blockquote p {
-  font-size: var(--t-xl);
-  line-height: 1.35;
-  letter-spacing: -0.018em;
+  font-size: var(--t-lg);
+  line-height: 1.5;
+  letter-spacing: -0.012em;
   color: var(--bone);
-  max-width: 46ch;
+  max-width: 52ch;
 }
 
-/* deliberately uneven: a wide column and a narrow one, not a tidy 3-up */
-.quotes {
-  columns: 2;
-  column-gap: var(--s12);
+/* Reviews scroll horizontally. A real scroll region, not hijacked wheel
+   travel: native scrollbar, snap points, arrow keys and swipe for free. */
+.scroller {
+  position: relative;
+  margin-inline: calc(clamp(1.25rem, 4vw, 2.5rem) * -1);
 }
-@media (max-width: 62rem) {
-  .quotes {
-    columns: 1;
+.scroller__rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(20rem, 24rem);
+  gap: var(--s6);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  padding-bottom: var(--s4);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.scroller__rail::-webkit-scrollbar {
+  height: 6px;
+}
+.scroller__rail::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: var(--r-pill);
+}
+.scroller__rail::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+.scroller__rail:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+@media (max-width: 46rem) {
+  .scroller__rail {
+    grid-auto-columns: minmax(17rem, 85%);
   }
 }
-.quotes .quote {
-  break-inside: avoid;
-  margin-bottom: var(--s8);
-  /* columns + transforms fight; reveal handles opacity only here */
+
+.rail-item {
+  scroll-snap-align: start;
+  display: flex;
+}
+.rail-item .quote {
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--line-strong);
+  border-radius: var(--r-card);
+  background: var(--surface);
+  padding: var(--s6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  width: 100%;
+  transition: border-color var(--dur) var(--ease-out);
+}
+.rail-item .quote:hover,
+.rail-item .quote:focus-within {
+  border-top-color: var(--accent);
+}
+.rail-item blockquote {
+  flex: 1;
+}
+.rail-item figcaption {
+  margin-top: 0;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line);
 }
 
-/* ---------- hover-to-reveal (feature work tiles) -------------------------
-   The reveal shows the actual client site, so it is evidence rather than
-   decoration. Pointer-only: touch users get the text, which is the content.
-   ------------------------------------------------------------------------- */
+.scroller__hint {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  margin-top: var(--s2);
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--ash);
+}
+.scroller__arrow svg {
+  width: 1rem;
+  height: 1rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .scroller__arrow {
+    animation: nudge 2.4s var(--ease-out) infinite;
+  }
+}
+@keyframes nudge {
+  0%, 60%, 100% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(4px);
+  }
+}
+
+/* rotating endorsement chip; min-width stops the line reflowing per word */
+.chip-line {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--ash);
+  letter-spacing: 0.06em;
+  margin-top: var(--s4);
+}
+.chip {
+  display: inline-block;
+  min-width: 15ch;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* hover-to-reveal: pointer-only, shows the actual client site */
 @media (hover: hover) and (pointer: fine) {
   .peek {
     position: fixed;
@@ -651,24 +724,25 @@ h3 {
   }
 }
 
-/* ---------- buttons ------------------------------------------------------ */
+/* buttons */
 .btn {
+  position: relative;
+  overflow: hidden; /* clips the ripple to the pill */
   display: inline-flex;
   align-items: center;
   gap: var(--s2);
-  padding: 0.7rem 1.15rem;
+  padding: var(--s3) 1.15rem;
   border-radius: var(--r-pill);
   font-size: var(--t-sm);
   font-weight: 600;
   letter-spacing: -0.01em;
-  /* magnetic offset, written by JS as px. Zero by default and on touch. */
+  /* magnetic offset from JS; zero by default and on touch */
   transform: translate3d(var(--magx, 0px), var(--magy, 0px), 0);
   transition: transform var(--dur) var(--ease-out),
     background var(--dur-fast) var(--ease-out),
     border-color var(--dur-fast) var(--ease-out);
 }
-/* while the cursor is inside, JS drives transform every frame: no transition,
-   or the button lags the pointer and feels broken rather than magnetic */
+/* JS drives transform per-frame while inside; a transition would lag it */
 .btn[data-mag="true"] {
   transition: background var(--dur-fast) var(--ease-out),
     border-color var(--dur-fast) var(--ease-out);
@@ -697,7 +771,7 @@ h3 {
   border-color: var(--accent);
   color: var(--accent);
 }
-/* a <label> acting as a button for a visually-hidden file input */
+
 .btn--file {
   cursor: pointer;
 }
@@ -706,7 +780,7 @@ h3 {
   height: 0.9rem;
 }
 
-/* ---------- hero --------------------------------------------------------- */
+/* hero */
 .hero {
   padding-block: clamp(var(--s16), 12vw, var(--s32)) var(--s16);
 }
@@ -739,7 +813,7 @@ h3 {
   margin-block: var(--s6) var(--s6);
   max-width: 20ch;
 }
-/* the one place accent touches display type. a single word, not a gradient. */
+
 .hero .display em {
   font-style: normal;
   color: var(--accent);
@@ -795,7 +869,7 @@ h3 {
   }
 }
 
-/* ---------- ledger (headline metrics) ------------------------------------ */
+/* headline metrics */
 .ledger {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -835,8 +909,7 @@ h3 {
   letter-spacing: 0;
 }
 
-/* Some outcomes are a phrase, not a number ("Days -> seconds"). Mono numeral
-   tracking mangles words, so those get the sans face at normal tracking. */
+/* phrase outcomes: mono numeral tracking mangles words */
 .metric--text {
   font-family: var(--sans);
   font-weight: 600;
@@ -858,7 +931,7 @@ h3 {
   color: var(--ash);
 }
 
-/* ---------- case studies: ledger rows, not cards -------------------------- */
+/* case studies */
 .cases {
   border-top: 1px solid var(--line);
 }
@@ -906,7 +979,7 @@ h3 {
 .case__title {
   display: block;
 }
-/* the arrow must ride the last word, never orphan onto its own line */
+/* arrow must ride the last word, never orphan */
 .case__title a {
   display: inline;
   background-image: linear-gradient(var(--accent), var(--accent));
@@ -940,7 +1013,6 @@ h3 {
   max-width: 56ch;
 }
 
-/* outcome: the actual point of the page */
 .case__outcome {
   margin-top: var(--s6);
   padding-left: var(--s4);
@@ -985,7 +1057,6 @@ h3 {
   margin-top: var(--s6);
 }
 
-/* screenshot: desaturated at rest, alive on hover. no lightbox lib. */
 .case__shot {
   border: 1px solid var(--line);
   border-radius: var(--r-card);
@@ -1003,7 +1074,8 @@ h3 {
     transform var(--dur-slow) var(--ease-out);
 }
 .case:hover .case__shot img,
-.case__shot a:focus-visible img {
+.case__shot a:focus-visible img,
+html.no-hover .case.is-active .case__shot img {
   filter: saturate(1) brightness(1) contrast(1);
   transform: scale(1.03);
 }
@@ -1011,7 +1083,7 @@ h3 {
   filter: saturate(0.8) brightness(0.98);
 }
 
-/* ---------- labs strip --------------------------------------------------- */
+/* labs */
 .labs {
   display: grid;
   /* deliberately uneven tracks */
@@ -1056,7 +1128,7 @@ h3 {
   color: var(--ash);
   flex: 1;
 }
-/* ---------- live demo ---------------------------------------------------- */
+/* demo */
 .demo {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1146,7 +1218,7 @@ h3 {
   color: var(--signal);
 }
 
-/* ---------- architecture diagram ----------------------------------------- */
+/* arch diagram */
 .arch {
   border: 1px solid var(--line);
   border-radius: var(--r-card);
@@ -1158,6 +1230,18 @@ h3 {
   width: 100%;
   min-width: 34rem;
   height: auto;
+}
+/* only needed once the svg's min-width forces a scroll */
+.arch__hint {
+  display: none;
+  margin-top: var(--s3);
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+}
+@media (max-width: 62rem) {
+  .arch__hint {
+    display: block;
+  }
 }
 .arch-box {
   fill: var(--surface-2);
@@ -1183,7 +1267,7 @@ h3 {
   fill: var(--accent);
 }
 
-/* ---------- stack grid --------------------------------------------------- */
+/* stack */
 .skills {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
@@ -1206,7 +1290,7 @@ h3 {
   padding-block: 0.2rem;
 }
 
-/* ---------- contact ------------------------------------------------------ */
+/* contact */
 .contact__grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
@@ -1246,7 +1330,7 @@ h3 {
   flex: none;
 }
 
-/* ---------- footer ------------------------------------------------------- */
+/* footer */
 .ftr {
   border-top: 1px solid var(--line);
   padding-block: var(--s8);
@@ -1262,14 +1346,9 @@ h3 {
   color: var(--ash);
 }
 
-/* ---------- parallax + pointer ------------------------------------------
-   Restraint is the point. Depth is carried by a slow-moving grid and a light
-   that follows the cursor - not by tilting cards or a custom cursor. All of it
-   is opt-in behind prefers-reduced-motion and fine-pointer checks.
-   ------------------------------------------------------------------------- */
+/* parallax + pointer; all of it opt-in behind reduced-motion + fine pointer */
 
-/* The field: a faint engineering grid that drifts as you scroll. Fixed, so it
-   parallaxes against the content for free - no scroll listener needed. */
+/* fixed grid parallaxes against content for free */
 .field {
   position: fixed;
   inset: -20vh 0;
@@ -1279,7 +1358,7 @@ h3 {
   background-image: linear-gradient(var(--line) 1px, transparent 1px),
     linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 72px 72px;
-  /* fade the grid out toward the edges so it never reads as a table */
+
   -webkit-mask-image: radial-gradient(120% 80% at 50% 0%, #000 0%, transparent 72%);
   mask-image: radial-gradient(120% 80% at 50% 0%, #000 0%, transparent 72%);
   transform: translate3d(0, calc(var(--sy, 0) * -28px), 0);
@@ -1289,24 +1368,24 @@ h3 {
   opacity: 0.7;
 }
 
-/* The pointer light. One soft radial that trails the cursor, tinted brand
-   cyan. Sits under the content, so text never loses contrast. */
+/* pointer light: halo lags, core chases. The gap is what sells it. */
 .glow {
   position: fixed;
   top: 0;
   left: 0;
-  width: 46rem;
-  height: 46rem;
+  width: 60rem;
+  height: 60rem;
   z-index: 0;
   pointer-events: none;
   opacity: 0;
   border-radius: 50%;
   background: radial-gradient(
     circle at center,
-    color-mix(in srgb, var(--accent) 13%, transparent) 0%,
-    transparent 62%
+    color-mix(in srgb, var(--accent) 30%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 12%, transparent) 34%,
+    transparent 68%
   );
-  /* JS only reports where the cursor is; CSS decides what that means. */
+
   transform: translate3d(calc(var(--gx, 50vw) - 50%), calc(var(--gy, 50vh) - 50%), 0);
   transition: opacity 600ms var(--ease-out);
   will-change: transform;
@@ -1314,70 +1393,421 @@ h3 {
 .glow[data-on="true"] {
   opacity: 1;
 }
+
+.glow__core {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 22rem;
+  height: 22rem;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--accent) 26%, transparent) 0%,
+    transparent 60%
+  );
+  mix-blend-mode: screen;
+  transform: translate3d(calc(var(--cx, 50vw) - 50%), calc(var(--cy, 50vh) - 50%), 0);
+  transition: opacity 400ms var(--ease-out);
+  will-change: transform;
+}
+.glow__core[data-on="true"] {
+  opacity: 1;
+}
 :root[data-theme="light"] .glow {
   background: radial-gradient(
     circle at center,
-    color-mix(in srgb, var(--accent) 9%, transparent) 0%,
-    transparent 62%
+    color-mix(in srgb, var(--accent) 16%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 7%, transparent) 34%,
+    transparent 68%
+  );
+}
+/* screen blows out a light page; multiply keeps the tint */
+:root[data-theme="light"] .glow__core {
+  mix-blend-mode: multiply;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--accent) 14%, transparent) 0%,
+    transparent 60%
   );
 }
 
-/* content must sit above the field/glow */
-.hdr,
+/* content sits above the field/glow. .hdr is excluded: it is position:sticky
+   and this rule would silently override it. */
 main,
 .ftr {
   position: relative;
   z-index: 1;
 }
 
-/* Hero depth is applied per-layer further down, not on the grid itself.
-   Transforming both would compound the offsets and shove the copy off-screen. */
+/* depth is per-layer below; transforming both would compound the offsets */
 .hero__grid {
   will-change: transform;
 }
 
-/* Screenshots drift within their frame as the row crosses the viewport.
-   --p is set per-case from -0.5..0.5 by the scroll handler. */
 .case__shot img {
-  transform: scale(1.06) translate3d(0, calc(var(--p, 0) * 16px), 0);
+  transform: scale(1.06) translate3d(0, calc(var(--p, 0) * 16px), 0)
+    skewY(calc(var(--skew, 0) * 1deg));
 }
 .case:hover .case__shot img,
-.case__shot a:focus-visible img {
-  transform: scale(1.1) translate3d(0, calc(var(--p, 0) * 16px), 0);
+.case__shot a:focus-visible img,
+html.no-hover .case.is-active .case__shot img {
+  transform: scale(1.1) translate3d(0, calc(var(--p, 0) * 16px), 0)
+    skewY(calc(var(--skew, 0) * 1deg));
 }
 
-/* Pointer-reactive lift. Only on devices with a real cursor: a touch user
-   gets none of this and loses nothing. */
+/* tilt sheen + lab cursor wash: the look is device-independent, only the
+   trigger differs (:hover below for fine pointers, .is-active for no-hover,
+   set by initCenterStage's ScrollTrigger). */
+.tilt {
+  position: relative; /* containing block for the sheen */
+}
+.tilt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    var(--sheen, 120deg),
+    transparent 38%,
+    color-mix(in srgb, var(--accent) 9%, transparent) 50%,
+    transparent 62%
+  );
+  transition: opacity var(--dur) var(--ease-out);
+}
+html.no-hover .tilt.is-active::after {
+  opacity: 1;
+}
+
+.lab {
+  position: relative;
+}
+.lab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    18rem circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--accent) 10%, transparent),
+    transparent 42%
+  );
+  transition: opacity var(--dur) var(--ease-out);
+}
+.lab > * {
+  position: relative;
+}
+html.no-hover .lab.is-active::before {
+  opacity: 1;
+}
+
 @media (hover: hover) and (pointer: fine) {
-  .lab {
-    position: relative;
+  /* 3D tilt, capped at 5deg */
+  .tilt {
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+      translate3d(0, 0, 0);
+    transform-style: preserve-3d;
+    transition: transform 500ms var(--ease-out);
   }
-  /* a cyan wash that follows the cursor across the tile */
-  .lab::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    pointer-events: none;
-    background: radial-gradient(
-      18rem circle at var(--mx, 50%) var(--my, 50%),
-      color-mix(in srgb, var(--accent) 10%, transparent),
-      transparent 42%
-    );
-    transition: opacity var(--dur) var(--ease-out);
+  .tilt[data-tilting="true"] {
+    transition: none;
   }
+  .tilt:hover::after {
+    opacity: 1;
+  }
+
   .lab:hover::before,
   .lab:focus-within::before {
     opacity: 1;
   }
-  .lab > * {
-    position: relative;
+}
+
+/* SplitText line mask; aria:"auto" keeps the headline one sentence for AT */
+.line-mask {
+  overflow: hidden;
+  display: block;
+  padding-bottom: 0.08em;
+}
+
+/* Left rail scrollspy. Hidden under 78rem: it needs margin that does not exist
+   on a laptop, and the header nav already covers the same ground. */
+.rail {
+  position: fixed;
+  left: max(1.25rem, calc((100vw - var(--wrap)) / 2 - 3.5rem));
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 45;
+  display: none;
+  flex-direction: column;
+  gap: var(--s3);
+}
+@media (min-width: 78rem) {
+  .rail {
+    display: flex;
+  }
+}
+.rail a {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  color: var(--ash);
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.rail__dot {
+  width: 18px;
+  height: 1px;
+  background: var(--line-strong);
+  flex: none;
+  transition: width var(--dur) var(--ease-out),
+    background var(--dur) var(--ease-out);
+}
+.rail__txt {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+.rail a:hover .rail__txt,
+.rail a:focus-visible .rail__txt,
+.rail a[aria-current="true"] .rail__txt {
+  opacity: 1;
+  transform: none;
+}
+.rail a:hover .rail__dot,
+.rail a:focus-visible .rail__dot {
+  width: 30px;
+  background: var(--accent);
+}
+.rail a[aria-current="true"] {
+  color: var(--accent);
+}
+.rail a[aria-current="true"] .rail__dot {
+  width: 34px;
+  background: var(--accent);
+}
+
+/* Career timeline. The spine is a real SVG path so DrawSVG can draw it. */
+.tl {
+  display: grid;
+  gap: 0;
+  position: relative;
+}
+.tl__spine {
+  position: absolute;
+  left: 7px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  overflow: visible;
+}
+.tl__spine line {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.tl__row {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: var(--s6);
+  padding-bottom: var(--s12);
+  position: relative;
+}
+.tl__row:last-child {
+  padding-bottom: 0;
+}
+.tl__node {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--ink);
+  margin-top: 0.35rem;
+  position: relative;
+  z-index: 1;
+}
+.tl__row[data-now="true"] .tl__node {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.tl__when {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+.tl__role {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: var(--s1);
+}
+.tl__org {
+  color: var(--ash);
+  font-size: var(--t-sm);
+}
+.tl__row ul {
+  margin-top: var(--s3);
+  display: grid;
+  gap: var(--s2);
+  max-width: 62ch;
+}
+.tl__row li {
+  color: var(--pewter);
+  font-size: var(--t-sm);
+  padding-left: var(--s4);
+  position: relative;
+}
+.tl__row li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 1px;
+  background: var(--line-strong);
+}
+.tl__row li b {
+  color: var(--signal);
+  font-weight: 600;
+}
+
+/* Draggable card deck. Cards stack with a slight offset; drag throws the top
+   one away and the next rises. Keyboard users get the buttons instead. */
+.deck {
+  position: relative;
+  height: 22rem;
+  touch-action: pan-y;
+}
+.deck__card {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--surface);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  cursor: grab;
+  will-change: transform;
+}
+.deck__card:active {
+  cursor: grabbing;
+}
+.deck__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: saturate(0.8);
+}
+.deck__meta {
+  padding: var(--s4) var(--s6);
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s4);
+}
+.deck__name {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.deck__tag {
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+.deck__hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  margin-top: var(--s4);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--ash);
+}
+.deck__ctrl {
+  display: flex;
+  gap: var(--s2);
+}
+.deck__ctrl button {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill);
+  display: grid;
+  place-items: center;
+  color: var(--ash);
+  transition: color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+.deck__ctrl button:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.deck__ctrl svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+/* 44px minimum touch target below tablet width */
+@media (max-width: 50rem) {
+  .deck__ctrl button {
+    width: 2.75rem;
+    height: 2.75rem;
   }
 }
 
-/* Hero layers drift at different rates, so the block gains depth rather than
-   sliding as one plate. Values are small on purpose: 8px to 34px across the
-   whole first viewport. Anything more and the text fights the reader. */
+/* Cursor trail. Dots lag progressively; index 0 is closest to the pointer. */
+.trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 41;
+  pointer-events: none;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  transform: translate3d(calc(var(--tx, 0px) - 50%), calc(var(--ty, 0px) - 50%), 0)
+    scale(var(--ts, 1));
+  transition: opacity 400ms var(--ease-out);
+  will-change: transform;
+}
+.trail[data-on="true"] {
+  opacity: var(--to, 0.5);
+}
+
+/* click ripple: one ring, 600ms */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent) 40%, transparent) 0%,
+    transparent 70%
+  );
+  animation: ripple 600ms var(--ease-out) forwards;
+}
+@keyframes ripple {
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* hero layers drift at different rates; 8-34px, small on purpose */
 .hero__rail {
   transform: translate3d(0, calc(var(--sy, 0) * 34px), 0);
 }
@@ -1397,17 +1827,26 @@ main,
 .hero__meta {
   transform: translate3d(0, calc(var(--sy, 0) * 32px), 0);
 }
-/* the ledger rises slightly as the hero leaves */
+
 .ledger {
   transform: translate3d(0, calc(var(--sy, 0) * -10px), 0);
 }
 
-/* Everything above is decoration. Strip it entirely when asked. */
 @media (prefers-reduced-motion: reduce) {
   .field,
   .glow,
-  .peek {
+  .glow__core,
+  .trail,
+  .peek,
+  .ripple,
+  .tilt::after {
     display: none;
+  }
+  .tilt {
+    transform: none;
+  }
+  .line-mask {
+    overflow: visible;
   }
   .hero__grid,
   .hero__rail,
@@ -1424,11 +1863,11 @@ main,
   .case__shot img {
     transform: scale(1.02);
   }
-  /* .prog stays: a 2px bar tracking the scrollbar is information, not motion. */
+  /* .prog stays: it is information, not motion */
 }
 
-/* ---------- motion ------------------------------------------------------- */
-/* JS adds .is-in; CSS owns the transition. Content is visible without JS. */
+/* motion */
+/* content is visible without JS */
 .reveal {
   opacity: 1;
 }
@@ -1459,7 +1898,7 @@ main,
   }
 }
 
-/* ---------- print: recruiters print things ------------------------------- */
+/* print */
 @media print {
   .hdr,
   .tgl,

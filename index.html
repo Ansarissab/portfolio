@@ -168,15 +168,14 @@
           <li><a href="#stack">Stack</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
-        <button class="tgl" id="theme" type="button" aria-label="Switch to light theme" aria-live="polite">
-          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-            stroke-linecap="round" aria-hidden="true" focusable="false">
-            <circle cx="12" cy="12" r="4.2" />
-            <path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6" />
-          </svg>
-          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+        <button class="tgl" id="theme" type="button" aria-label="Switch to light theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <path d="M20.5 14.3A8.6 8.6 0 1 1 9.7 3.5a6.9 6.9 0 0 0 10.8 10.8Z" />
+            <path id="tgl-shape"
+              d="M12 7.8a4.2 4.2 0 1 1 0 8.4 4.2 4.2 0 0 1 0-8.4Z" />
+            <g id="tgl-rays">
+              <path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6" />
+            </g>
           </svg>
         </button>
       </nav>
@@ -186,6 +185,21 @@
   <!-- Reading progress. aria-hidden: the scrollbar already conveys this to AT,
        so announcing it again would be noise. -->
   <div class="prog" id="prog" aria-hidden="true"><span class="prog__bar"></span></div>
+
+  <nav class="rail" id="rail" aria-label="Section">
+    <a href="#work"><span class="rail__dot"></span><span class="rail__txt">Work</span></a>
+    <a href="#maintained"><span class="rail__dot"></span><span class="rail__txt">Sites</span></a>
+    <a href="#labs"><span class="rail__dot"></span><span class="rail__txt">Labs</span></a>
+    <a href="#words"><span class="rail__dot"></span><span class="rail__txt">Words</span></a>
+    <a href="#path"><span class="rail__dot"></span><span class="rail__txt">Path</span></a>
+    <a href="#demo"><span class="rail__dot"></span><span class="rail__txt">Demo</span></a>
+    <a href="#infra"><span class="rail__dot"></span><span class="rail__txt">Infra</span></a>
+    <a href="#stack"><span class="rail__dot"></span><span class="rail__txt">Stack</span></a>
+    <a href="#contact"><span class="rail__dot"></span><span class="rail__txt">Contact</span></a>
+  </nav>
+
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
 
   <main id="main">
 
@@ -217,7 +231,7 @@
           </div>
 
           <ul class="hero__meta">
-            <li><span class="dot-live" aria-hidden="true"></span> Available for contract work</li>
+            <li><span class="dot-live" aria-hidden="true"></span><span data-type="Available for contract work">Available for contract work</span></li>
             <li>6+ years shipping</li>
             <li>Lahore, Pakistan · UTC+5</li>
           </ul>
@@ -228,17 +242,20 @@
       <ul class="ledger reveal" aria-label="Headline outcomes">
         <li class="ledger__item">
           <p class="metric"><span data-count="60" data-suffix="%">60<span class="metric__unit">%</span></span></p>
+          <button type="button" class="vh rerun" aria-label="Re-run this figure"></button>
           <p class="metric__label">Administrative overhead removed for a 50+ vehicle fleet</p>
           <p class="metric__src">EasyForTrip · Rails + Stripe</p>
         </li>
         <li class="ledger__item">
           <p class="metric"><span data-count="35" data-suffix="%">35<span class="metric__unit">%</span></span></p>
+          <button type="button" class="vh rerun" aria-label="Re-run this figure"></button>
           <p class="metric__label">Query latency cut across 3 production apps, 1,000+ monthly users</p>
           <p class="metric__src">Devsinc · Redis + GraphQL</p>
         </li>
         <li class="ledger__item">
           <p class="metric"><span data-count="4.8" data-decimals="1" data-suffix="×">4.8<span
                 class="metric__unit">×</span></span></p>
+          <button type="button" class="vh rerun" aria-label="Re-run this figure"></button>
           <p class="metric__label">Faster page loads after a WordPress&nbsp;→&nbsp;static rebuild</p>
           <p class="metric__src">amitramanuj.com · measured, 3-run average</p>
         </li>
@@ -281,6 +298,7 @@
 
               <div class="case__outcome">
                 <p class="metric"><span data-count="2084">2,084</span></p>
+                <button type="button" class="vh rerun" aria-label="Re-run this figure"></button>
                 <p>unit tests at 95% coverage, plus integration tests against real workerd and
                   full end-to-end, accessibility and visual-regression suites. 22 architecture
                   decision records. 657 commits.</p>
@@ -306,7 +324,7 @@
                 <li>Playwright</li>
               </ul>
             </div>
-            <figure class="case__shot">
+            <figure class="case__shot tilt">
               <a href="https://shopflare-web.zahidensari116.workers.dev/" rel="noopener">
                 <img src="assets/shots/shopflare.webp" width="1000" height="625" loading="lazy" decoding="async"
                   alt="ShopFlare storefront showing a product grid of apparel and accessories.">
@@ -357,7 +375,7 @@
                 <li>Minitest</li>
               </ul>
             </div>
-            <figure class="case__shot">
+            <figure class="case__shot tilt">
               <img src="assets/shots/gymplex.webp" width="1000" height="431" loading="lazy"
                 decoding="async"
                 alt="Gymplex staff dashboard listing gym members with roles, join dates and active status, branded for the tenant gym.">
@@ -386,6 +404,7 @@
 
               <div class="case__outcome">
                 <p class="metric"><span data-count="60" data-suffix="%">60<span class="metric__unit">%</span></span></p>
+                <button type="button" class="vh rerun" aria-label="Re-run this figure"></button>
                 <p>less administrative overhead, and 15+ hours a week of manual scheduling gone.
                   Checkout sits behind authentication, so the payment flow is not publicly
                   verifiable. The booking platform itself is live.</p>
@@ -403,7 +422,7 @@
                 <li>Cloudflare</li>
               </ul>
             </div>
-            <figure class="case__shot">
+            <figure class="case__shot tilt">
               <a href="https://easyfortrip.com" rel="noopener">
                 <img src="assets/shots/easyfortrip.webp" width="1000" height="625" loading="lazy" decoding="async"
                   alt="EasyForTrip booking platform homepage with a vehicle booking interface.">
@@ -453,7 +472,7 @@
                 <li>CI/CD</li>
               </ul>
             </div>
-            <figure class="case__shot">
+            <figure class="case__shot tilt">
               <a href="https://kleptofinder.com" rel="noopener">
                 <img src="assets/shots/kleptofinder.webp" width="1000" height="625" loading="lazy" decoding="async"
                   alt="Kleptofinder marketing site hero explaining reverse image search for artists.">
@@ -499,7 +518,7 @@
                 <li>Passenger</li>
               </ul>
             </div>
-            <figure class="case__shot">
+            <figure class="case__shot tilt">
               <a href="https://craftfoxes.com" rel="noopener">
                 <img src="assets/shots/craftfoxes.webp" width="1000" height="625" loading="lazy" decoding="async"
                   alt="Craftfoxes craft marketplace homepage showing seller product listings.">
@@ -529,6 +548,7 @@
               <div class="case__outcome">
                 <p class="metric"><span data-count="4.8" data-decimals="1" data-suffix="×">4.8<span
                       class="metric__unit">×</span></span></p>
+                <button type="button" class="vh rerun" aria-label="Re-run this figure"></button>
                 <p>faster to first byte: 0.34s against 1.64s for the equivalent WordPress stack,
                   three-run average. Hosting went to zero, and so did the plugin attack surface.</p>
               </div>
@@ -545,7 +565,7 @@
                 <li>WordPress migration</li>
               </ul>
             </div>
-            <figure class="case__shot">
+            <figure class="case__shot tilt">
               <a href="https://amitramanuj.com/" rel="noopener">
                 <img src="assets/shots/amitramanuj.webp" width="1000" height="625" loading="lazy" decoding="async"
                   alt="Amit Ramanuj game design portfolio, rebuilt as static HTML.">
@@ -576,6 +596,7 @@
               <div class="case__outcome">
                 <p class="metric"><span data-count="100" data-suffix="%">100<span
                       class="metric__unit">%</span></span></p>
+                <button type="button" class="vh rerun" aria-label="Re-run this figure"></button>
                 <p>line coverage across 98 tests, measured by SimpleCov. Not a target, the actual
                   recorded figure. Invoice tests assert extracted PDF text, not just that a file
                   rendered.</p>
@@ -602,7 +623,7 @@
                 <li>Minitest</li>
               </ul>
             </div>
-            <figure class="case__shot">
+            <figure class="case__shot tilt">
               <img src="assets/shots/stripe-demo.webp" width="1000" height="625" loading="lazy" decoding="async"
                 alt="Subscription management screen showing an active Pro plan with renewal dates and billing portal actions.">
             </figure>
@@ -620,96 +641,97 @@
           <div class="section-head__body">
             <span class="eyebrow">Feature work &amp; upgrades</span>
             <h2 id="maint-h">Live sites I shipped features into.</h2>
-            <p>Existing products where I added functionality, moved versions forward, or kept things
-              running. Not builds from scratch, and worth saying plainly because the difference matters.</p>
+            <p>Existing products where I added functionality, moved versions forward, or kept
+              things running. Not builds from scratch, and worth saying plainly because the
+              difference matters.</p>
           </div>
         </div>
 
-        <div class="labs">
-          <article class="lab" data-peek="assets/shots/feat-gamingdk.webp">
-            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M3 9h18M3 15h18M9 3v18" />
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-            </svg>
-            <h3>gaming.dk</h3>
-            <p>Denmark's esports and gaming news platform, on Rails. Feature work against a large
-              editorial content base.</p>
-            <ul class="meta-links">
-              <li><a href="https://gaming.dk" rel="noopener">Visit</a></li>
-              <li><span class="muted">Rails</span></li>
-            </ul>
-          </article>
+        <div class="demo">
+          <div>
+            <div class="deck" id="deck">
+              <article class="deck__card" data-card="0">
+                <img src="assets/shots/feat-gamingdk.webp" width="600" height="375" loading="lazy"
+                  decoding="async" alt="gaming.dk, a Danish esports and gaming news platform.">
+                <div class="deck__meta">
+                  <span class="deck__name">gaming.dk</span>
+                  <span class="deck__tag">Rails · Esports news</span>
+                </div>
+              </article>
+              <article class="deck__card" data-card="1">
+                <img src="assets/shots/feat-zsolnay.webp" width="600" height="375" loading="lazy"
+                  decoding="async" alt="zsolnay.hu, a Hungarian porcelain manufacturer storefront.">
+                <div class="deck__meta">
+                  <span class="deck__name">zsolnay.hu</span>
+                  <span class="deck__tag">Shopify · Porcelain, est. 1853</span>
+                </div>
+              </article>
+              <article class="deck__card" data-card="2">
+                <img src="assets/shots/feat-migamake.webp" width="600" height="375" loading="lazy"
+                  decoding="async" alt="migamake.com, a Singapore developer tools company.">
+                <div class="deck__meta">
+                  <span class="deck__name">migamake.com</span>
+                  <span class="deck__tag">Jekyll · Developer tools</span>
+                </div>
+              </article>
+              <article class="deck__card" data-card="3">
+                <img src="assets/shots/feat-outlaw.webp" width="600" height="375" loading="lazy"
+                  decoding="async" alt="outlawsolutions.com, aerosol and chemical packaging.">
+                <div class="deck__meta">
+                  <span class="deck__name">outlawsolutions.com</span>
+                  <span class="deck__tag">Wix · Aerosol packaging</span>
+                </div>
+              </article>
+              <article class="deck__card" data-card="4">
+                <img src="assets/shots/feat-sunrisenv.webp" width="600" height="375" loading="lazy"
+                  decoding="async" alt="sunrisenv.com, an industrial chemical manufacturer.">
+                <div class="deck__meta">
+                  <span class="deck__name">sunrisenv.com</span>
+                  <span class="deck__tag">Wix · Industrial chemicals</span>
+                </div>
+              </article>
+            </div>
 
-          <article class="lab" data-peek="assets/shots/feat-zsolnay.webp">
-            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-              <path d="M3 6h18M16 10a4 4 0 0 1-8 0" />
-            </svg>
-            <h3>zsolnay.hu</h3>
-            <p>Storefront work for a Hungarian porcelain manufacturer founded in 1853, on Shopify.</p>
-            <ul class="meta-links">
-              <li><a href="https://www.zsolnay.hu/" rel="noopener">Visit</a></li>
-              <li><span class="muted">Shopify</span></li>
-            </ul>
-          </article>
+            <div class="deck__hint">
+              <span id="deck-status" role="status" aria-live="polite">Card 1 of 5</span>
+              <span class="deck__ctrl">
+                <button type="button" id="deck-prev" aria-label="Previous site">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+                <button type="button" id="deck-next" aria-label="Next site">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </div>
 
-          <article class="lab" data-peek="assets/shots/feat-migamake.webp">
-            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M4 4h16v16H4z" />
-              <path d="M8 9h8M8 13h5" />
-            </svg>
-            <h3>migamake.com</h3>
-            <p>Singapore developer-tools company. Jekyll static site: StreamCardano, Homplexity,
-              hURL, JSON Autotype.</p>
-            <ul class="meta-links">
-              <li><a href="https://migamake.com/" rel="noopener">Visit</a></li>
-              <li><span class="muted">Jekyll</span></li>
+          <div>
+            <div class="note">
+              <b class="note__h">Drag a card, or use the arrows</b>
+              <p>Five live products I shipped features into. Throw the top card and the next one
+                rises. Every card links to a site that is running right now.</p>
+            </div>
+            <ul class="skills">
+              <li><a class="lnk" href="https://gaming.dk" rel="noopener">gaming.dk</a></li>
+              <li><a class="lnk" href="https://www.zsolnay.hu/" rel="noopener">zsolnay.hu</a></li>
+              <li><a class="lnk" href="https://migamake.com/" rel="noopener">migamake.com</a></li>
+              <li><a class="lnk" href="https://www.outlawsolutions.com/"
+                  rel="noopener">outlawsolutions.com</a></li>
+              <li><a class="lnk" href="https://www.sunrisenv.com/" rel="noopener">sunrisenv.com</a>
+              </li>
             </ul>
-          </article>
-
-          <article class="lab" data-peek="assets/shots/feat-outlaw.webp">
-            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z" />
-              <path d="M12 12v10M3 7l9 5 9-5" />
-            </svg>
-            <h3>outlawsolutions.com</h3>
-            <p>Contract aerosol and chemical packaging manufacturer, Sparks NV. Wix.</p>
-            <ul class="meta-links">
-              <li><a href="https://www.outlawsolutions.com/" rel="noopener">Visit</a></li>
-              <li><span class="muted">Wix</span></li>
-            </ul>
-          </article>
-
-          <article class="lab" data-peek="assets/shots/feat-sunrisenv.webp">
-            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <circle cx="12" cy="12" r="4" />
-              <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" />
-            </svg>
-            <h3>sunrisenv.com</h3>
-            <p>Industrial chemical manufacturer since 1975. NSF and EPA compliant formulations. Wix.</p>
-            <ul class="meta-links">
-              <li><a href="https://www.sunrisenv.com/" rel="noopener">Visit</a></li>
-              <li><span class="muted">Wix</span></li>
-            </ul>
-          </article>
-
-          <article class="lab">
-            <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M3 20h18M6 20V9M12 20V4M18 20v-7" />
-            </svg>
-            <h3>Devsinc, 3 production apps</h3>
-            <p>Redis-backed ActiveRecord query caching for GraphQL APIs. Cut query latency 35% and
-              server-side errors 20% for 1,000+ monthly active users.</p>
-            <ul class="meta-links">
-              <li><span class="muted">Rails · Redis · GraphQL · PostgreSQL</span></li>
-            </ul>
-          </article>
+            <div class="note note--signal">
+              <b class="note__h">Devsinc, 3 production apps</b>
+              <p>Redis-backed ActiveRecord query caching for GraphQL APIs. Cut query latency 35%
+                and server-side errors 20% for 1,000+ monthly active users.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -728,7 +750,7 @@
         </div>
 
         <div class="labs">
-          <article class="lab">
+          <article class="lab tilt">
             <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -746,7 +768,7 @@
             </ul>
           </article>
 
-          <article class="lab">
+          <article class="lab tilt">
             <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <rect x="6" y="2" width="12" height="20" rx="2.5" />
@@ -761,7 +783,7 @@
             </ul>
           </article>
 
-          <article class="lab">
+          <article class="lab tilt">
             <svg class="lab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <path d="M12 16V4M7 9l5-5 5 5" />
@@ -790,6 +812,10 @@
             <h2 id="words-h">What clients said, verbatim.</h2>
             <p>Pulled from Upwork, unedited. Spelling and phrasing are theirs, including the
               typos. Every one is a 5.0.</p>
+            <p class="chip-line">Clients picked these words:
+              <span class="chip" id="chip"
+                data-words='["Reliable","Clear Communicator","Solution Oriented","Collaborative","Accountable for Outcomes","Detail Oriented"]'>Reliable</span>
+            </p>
           </div>
         </div>
 
@@ -809,82 +835,94 @@
           </figcaption>
         </figure>
 
-        <div class="quotes">
-          <figure class="quote reveal">
-            <blockquote>
-              <p>Muhammad optimised the speed of my website and dropped the page load speed by
-                <mark>60%</mark>! The work was fast and well communicated.</p>
-            </blockquote>
-            <figcaption>
-              <span class="quote__who">Clifton R.</span>
-              <span class="quote__meta">CEO · Jan 2022 · Verified</span>
-            </figcaption>
-          </figure>
+        <div class="scroller" role="region" aria-label="Client reviews, scroll horizontally">
+          <ul class="scroller__rail" id="qrail" tabindex="0">
 
-          <figure class="quote reveal">
-            <blockquote>
-              <p>I've hired Muhammad a few times, I'd highly recommend him. He's reliable,
-                professional and gets the work done to the highest standard every time. He even
-                gave me a few pointers outside the scope of the job to clean up parts of the app we
-                were working on, which was greatly appreciated. All code Muhammad did for me was
-                the highest quality and had no issues. His attention to detail and high standards
-                meant that everything worked first time and as it should. Communication was also
-                very good, he would reply very quickly which is always so important when working on
-                an app as a team. I'd recommend him for anything Ruby on Rails related.</p>
-            </blockquote>
-            <figcaption>
-              <span class="quote__who">Tom G.</span>
-              <span class="quote__meta">Nov 2021 · Verified</span>
-            </figcaption>
-          </figure>
+              <li class="rail-item"><figure class="quote">
+                <blockquote>
+                  <p>Muhammad optimised the speed of my website and dropped the page load speed by
+                    <mark>60%</mark>! The work was fast and well communicated.</p>
+                </blockquote>
+                <figcaption>
+                  <span class="quote__who">Clifton R.</span>
+                  <span class="quote__meta">CEO · Jan 2022 · Verified</span>
+                </figcaption>
+              </figure></li>
 
-          <figure class="quote reveal">
-            <blockquote>
-              <p>Zahid has dilligently created a few beautiful web pages that have so far avoided
-                maintenance for quite a time. I recommend him for such customer facing projects.</p>
-            </blockquote>
-            <figcaption>
-              <span class="quote__who">Michal</span>
-              <span class="quote__meta">Migamake · Nov 2022 to Jun 2026 · 5.0</span>
-            </figcaption>
-          </figure>
+              <li class="rail-item"><figure class="quote">
+                <blockquote>
+                  <p>I've hired Muhammad a few times, I'd highly recommend him. He's reliable,
+                    professional and gets the work done to the highest standard every time. He even
+                    gave me a few pointers outside the scope of the job to clean up parts of the app we
+                    were working on, which was greatly appreciated. All code Muhammad did for me was
+                    the highest quality and had no issues. His attention to detail and high standards
+                    meant that everything worked first time and as it should. Communication was also
+                    very good, he would reply very quickly which is always so important when working on
+                    an app as a team. I'd recommend him for anything Ruby on Rails related.</p>
+                </blockquote>
+                <figcaption>
+                  <span class="quote__who">Tom G.</span>
+                  <span class="quote__meta">Nov 2021 · Verified</span>
+                </figcaption>
+              </figure></li>
 
-          <figure class="quote reveal">
-            <blockquote>
-              <p>The requested work was completed sooner than expected time. Zahid understood the
-                requirements well, he showed initiatives, and presented solutions. I'll definitely
-                prefer to work with him again.</p>
-            </blockquote>
-            <figcaption>
-              <span class="quote__who">Amit Ramanuj</span>
-              <span class="quote__meta">Mar 2025 · 5.0 · Reliable, Clear Communicator, Solution
-                Oriented</span>
-            </figcaption>
-          </figure>
+              <li class="rail-item"><figure class="quote">
+                <blockquote>
+                  <p>Zahid has dilligently created a few beautiful web pages that have so far avoided
+                    maintenance for quite a time. I recommend him for such customer facing projects.</p>
+                </blockquote>
+                <figcaption>
+                  <span class="quote__who">Michal</span>
+                  <span class="quote__meta">Migamake · Nov 2022 to Jun 2026 · 5.0</span>
+                </figcaption>
+              </figure></li>
 
-          <figure class="quote reveal">
-            <blockquote>
-              <p>Zahid was incredible from start to finish. Communication was great from start to
-                finish. I've worked with a few developers and this we far and away, the best
-                experience I have. Zahid and I will be working together in the near future!</p>
-            </blockquote>
-            <figcaption>
-              <span class="quote__who">Todd J.</span>
-              <span class="quote__meta">Business Operational Manager · Apr 2022 · Verified</span>
-            </figcaption>
-          </figure>
+              <li class="rail-item"><figure class="quote">
+                <blockquote>
+                  <p>The requested work was completed sooner than expected time. Zahid understood the
+                    requirements well, he showed initiatives, and presented solutions. I'll definitely
+                    prefer to work with him again.</p>
+                </blockquote>
+                <figcaption>
+                  <span class="quote__who">Amit Ramanuj</span>
+                  <span class="quote__meta">Mar 2025 · 5.0 · Reliable, Clear Communicator, Solution
+                    Oriented</span>
+                </figcaption>
+              </figure></li>
 
-          <figure class="quote reveal">
-            <blockquote>
-              <p>Zahid has been a thoughtful and helpful developer for our team. We'll continue to
-                use him to work on our sites.</p>
-            </blockquote>
-            <figcaption>
-              <span class="quote__who">Sunrise Environmental</span>
-              <span class="quote__meta">Jan 2026 · 5.0 · Collaborative, Accountable for
-                Outcomes</span>
-            </figcaption>
-          </figure>
+              <li class="rail-item"><figure class="quote">
+                <blockquote>
+                  <p>Zahid was incredible from start to finish. Communication was great from start to
+                    finish. I've worked with a few developers and this we far and away, the best
+                    experience I have. Zahid and I will be working together in the near future!</p>
+                </blockquote>
+                <figcaption>
+                  <span class="quote__who">Todd J.</span>
+                  <span class="quote__meta">Business Operational Manager · Apr 2022 · Verified</span>
+                </figcaption>
+              </figure></li>
+
+              <li class="rail-item"><figure class="quote">
+                <blockquote>
+                  <p>Zahid has been a thoughtful and helpful developer for our team. We'll continue to
+                    use him to work on our sites.</p>
+                </blockquote>
+                <figcaption>
+                  <span class="quote__who">Sunrise Environmental</span>
+                  <span class="quote__meta">Jan 2026 · 5.0 · Collaborative, Accountable for
+                    Outcomes</span>
+                </figcaption>
+              </figure></li>
+          </ul>
+          <p class="scroller__hint">
+            <span>Scroll, swipe or use arrow keys</span>
+            <span class="scroller__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12h16M14 6l6 6-6 6" />
+              </svg>
+            </span>
+          </p>
         </div>
 
         <p class="meta-links meta-links--spaced">
@@ -894,11 +932,78 @@
       </div>
     </section>
 
+    <!-- ============================ TIMELINE ============================ -->
+    <section class="section" id="path" aria-labelledby="path-h">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-head__no" aria-hidden="true">05</p>
+          <div class="section-head__body">
+            <span class="eyebrow">The path</span>
+            <h2 id="path-h">Six years, three chapters.</h2>
+            <p>Where the numbers on this page came from.</p>
+          </div>
+        </div>
+
+        <ol class="tl reveal">
+          <svg class="tl__spine" aria-hidden="true" preserveAspectRatio="none">
+            <line x1="1" y1="0" x2="1" y2="100%" />
+          </svg>
+
+          <li class="tl__row" data-now="true">
+            <span class="tl__node" aria-hidden="true"></span>
+            <div>
+              <p class="tl__when">Apr 2022 &ndash; present</p>
+              <h3 class="tl__role">Independent Consultant</h3>
+              <p class="tl__org">Upwork, contract engagements</p>
+              <ul>
+                <li>Architected fleet booking and Stripe payments for EasyForTrip, cutting
+                  administrative overhead <b>60%</b> and removing <b>15+ hours</b> of manual
+                  scheduling a week.</li>
+                <li>Built Kleptofinder, taking artwork theft detection from <b>days to
+                    seconds</b> on Angular, C# Azure Functions and BingAI.</li>
+                <li>Shipped listings, orders and Stripe into Craftfoxes, then led a Rails version
+                  upgrade with <b>zero downtime</b>.</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="tl__row">
+            <span class="tl__node" aria-hidden="true"></span>
+            <div>
+              <p class="tl__when">Sep 2020 &ndash; Apr 2022</p>
+              <h3 class="tl__role">Software Engineer</h3>
+              <p class="tl__org">Devsinc</p>
+              <ul>
+                <li>Cut query latency <b>35%</b> and server-side errors <b>20%</b> across 3
+                  production apps with Redis-backed ActiveRecord caching for GraphQL.</li>
+                <li>Moved deployments to Docker on AWS EC2 with automated CI/CD, shortening the
+                  release cycle across every client project.</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="tl__row">
+            <span class="tl__node" aria-hidden="true"></span>
+            <div>
+              <p class="tl__when">Mar 2019 &ndash; Jul 2020</p>
+              <h3 class="tl__role">Co-Founder &amp; Technical Lead</h3>
+              <p class="tl__org">Takhleeq</p>
+              <ul>
+                <li>Took the MVP from idea to launch, reaching <b>200+</b> early adopters at
+                  <b>99.9%</b> uptime on AWS EC2, S3 and RDS.</li>
+                <li>Owned every technical decision, from stack selection to production deploy.</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
     <!-- ============================ DEMO ============================ -->
     <section class="section" id="demo" aria-labelledby="demo-h">
       <div class="wrap">
         <div class="section-head">
-          <p class="section-head__no" aria-hidden="true">05</p>
+          <p class="section-head__no" aria-hidden="true">06</p>
           <div class="section-head__body">
             <span class="eyebrow">Live, in this page</span>
             <h2 id="demo-h">Try it rather than take my word for it.</h2>
@@ -966,7 +1071,7 @@
     <section class="section" id="infra" aria-labelledby="infra-h">
       <div class="wrap">
         <div class="section-head">
-          <p class="section-head__no" aria-hidden="true">06</p>
+          <p class="section-head__no" aria-hidden="true">07</p>
           <div class="section-head__body">
             <span class="eyebrow">Infrastructure</span>
             <h2 id="infra-h">Three unrelated apps, one box, one proxy.</h2>
@@ -976,7 +1081,7 @@
           </div>
         </div>
 
-        <div class="arch reveal">
+        <div class="arch reveal" tabindex="0" role="region" aria-label="Kamal multi-app deployment topology diagram, scrolls horizontally">
           <svg viewBox="0 0 760 300" role="img" aria-labelledby="arch-t arch-d">
             <title id="arch-t">Kamal multi-app deployment topology</title>
             <desc id="arch-d">Internet traffic reaches a single virtual machine. kamal-proxy routes by
@@ -1049,6 +1154,7 @@
             </defs>
           </svg>
         </div>
+        <p class="arch__hint muted" aria-hidden="true">Scroll horizontally to see the full diagram &rarr;</p>
 
         <p class="meta-links meta-links--spaced">
           <a href="https://github.com/Ansarissab/kamal-multi-app-deployment-examples" rel="noopener">Configs on
@@ -1061,7 +1167,7 @@
     <section class="section" id="stack" aria-labelledby="stack-h">
       <div class="wrap">
         <div class="section-head">
-          <p class="section-head__no" aria-hidden="true">07</p>
+          <p class="section-head__no" aria-hidden="true">08</p>
           <div class="section-head__body">
             <span class="eyebrow">Stack</span>
             <h2 id="stack-h">What I reach for.</h2>
@@ -1137,7 +1243,7 @@
     <section class="section" id="contact" aria-labelledby="contact-h">
       <div class="wrap">
         <div class="section-head">
-          <p class="section-head__no" aria-hidden="true">08</p>
+          <p class="section-head__no" aria-hidden="true">09</p>
           <div class="section-head__body">
             <span class="eyebrow">Contact</span>
             <h2 id="contact-h">Tell me what is costing you money.</h2>
@@ -1208,9 +1314,14 @@
     </div>
   </footer>
 
-  <!-- defer preserves execution order: gsap -> plugin -> app -->
+    </div>
+  </div>
+
+  <!-- Eager: everything the first viewport needs. defer preserves order. -->
   <script src="assets/js/gsap.min.js" defer></script>
   <script src="assets/js/ScrollTrigger.min.js" defer></script>
+  <script src="assets/js/SplitText.min.js" defer></script>
+  <script src="assets/js/ScrollSmoother.min.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 

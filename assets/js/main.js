@@ -1,22 +1,21 @@
-/* =========================================================================
-   Muhammad Zahid - portfolio behaviour
-   CSS owns presentation. This file owns behaviour only.
-   Nothing here is required to read the page: all content ships in the HTML.
-   ========================================================================= */
+/* Behaviour only. CSS owns presentation; all content ships in the HTML. */
 (function () {
   "use strict";
 
   var root = document.documentElement;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------------- footer year ---------------- */
+  /* touch/no-hover devices get the hover-only effects mirrored via .is-active
+     instead; see initCenterStage and the .no-hover rules in main.css */
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    root.classList.add("no-hover");
+  }
+
   var yr = document.getElementById("yr");
   if (yr) yr.textContent = String(new Date().getFullYear());
 
-  /* ---------------- theme ---------------------- */
   var toggle = document.getElementById("theme");
 
-  /* Dark unless the visitor explicitly chose otherwise. Matches the CSS. */
   function current() {
     return root.getAttribute("data-theme") === "light" ? "light" : "dark";
   }
@@ -36,16 +35,37 @@
     if (meta) meta.setAttribute("content", theme === "dark" ? "#090d11" : "#f7f8f7");
   }
 
+  var SUN = "M12 7.8a4.2 4.2 0 1 1 0 8.4 4.2 4.2 0 0 1 0-8.4Z";
+  var MOON = "M20.5 14.3A8.6 8.6 0 1 1 9.7 3.5a6.9 6.9 0 0 0 10.8 10.8Z";
+
+  /* Morph the sun into the moon rather than swapping two icons. Falls back to
+     a plain `d` swap if MorphSVG or gsap is unavailable. */
+  function paintIcon(theme, animate) {
+    var shape = document.getElementById("tgl-shape");
+    var rays = document.getElementById("tgl-rays");
+    if (!shape) return;
+    var to = theme === "dark" ? SUN : MOON;
+    if (animate && window.gsap && window.MorphSVGPlugin && !reduced) {
+      window.gsap.registerPlugin(window.MorphSVGPlugin);
+      window.gsap.to(shape, { duration: 0.5, ease: "power2.inOut", morphSVG: to });
+      window.gsap.to(rays, { duration: 0.3, opacity: theme === "dark" ? 1 : 0 });
+    } else {
+      shape.setAttribute("d", to);
+      if (rays) rays.style.opacity = theme === "dark" ? "1" : "0";
+    }
+  }
+
   if (toggle) {
     paint(current());
+    paintIcon(current(), false);
     toggle.addEventListener("click", function () {
-      paint(current() === "dark" ? "light" : "dark");
+      var next = current() === "dark" ? "light" : "dark";
+      paint(next);
+      paintIcon(next, true);
     });
   }
 
-  /* ---------------- reading progress ----------
-     Not gated on reduced-motion: a bar tracking the scrollbar is information,
-     not animation. Writes one custom property; CSS owns the rest. */
+  /* Not gated on reduced-motion: a scroll bar is information, not animation. */
   var prog = document.getElementById("prog");
   if (prog) {
     var progTick = false;
@@ -67,7 +87,6 @@
     setRead();
   }
 
-  /* ---------------- sticky header shadow ------- */
   var hdr = document.getElementById("hdr");
   if (hdr && "IntersectionObserver" in window) {
     var sentinel = document.createElement("div");
@@ -82,12 +101,49 @@
     ).observe(sentinel);
   }
 
-  /* =======================================================================
-     Parallax + pointer.
-     One rAF loop drives everything. Listeners are passive and only ever write
-     CSS custom properties - CSS owns what those properties mean, so the whole
-     effect can be disabled from a stylesheet.
-     ======================================================================= */
+  /* Below-the-fold plugins load once the browser is idle, or on first scroll,
+     whichever comes first. Nothing above the fold depends on them. */
+  var LATE = [
+    "DrawSVGPlugin", "ScrambleTextPlugin", "MorphSVGPlugin",
+    "TextPlugin", "Draggable", "InertiaPlugin",
+  ];
+  var latePromise = null;
+
+  function loadLate() {
+    if (latePromise) return latePromise;
+    latePromise = Promise.all(
+      LATE.map(function (n) {
+        if (window[n]) return Promise.resolve();
+        return new Promise(function (resolve) {
+          var s = document.createElement("script");
+          s.src = "assets/js/" + n + ".min.js";
+          s.onload = s.onerror = resolve;
+          document.head.appendChild(s);
+        });
+      })
+    ).then(function () {
+      if (!window.gsap) return;
+      LATE.forEach(function (n) {
+        if (window[n]) window.gsap.registerPlugin(window[n]);
+      });
+    });
+    return latePromise;
+  }
+
+  function armLate() {
+    var fired = false;
+    var go = function () {
+      if (fired) return;
+      fired = true;
+      loadLate().then(initLate);
+    };
+    window.addEventListener("scroll", go, { passive: true, once: true });
+    window.addEventListener("pointerdown", go, { once: true });
+    if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 2500 });
+    else setTimeout(go, 1200);
+  }
+
+  /* One rAF loop. Listeners are passive and only write CSS custom props. */
   function initParallax() {
     if (reduced) return;
 
@@ -99,13 +155,60 @@
     field.setAttribute("aria-hidden", "true");
     body.prepend(field);
 
-    var glow = null;
+    /* glow + core exist on every device: fine pointers get continuous
+       tracking below, touch gets a one-shot pulse on tap (initTouchPulse). */
+    var glow = document.createElement("div");
+    glow.className = "glow";
+    glow.setAttribute("aria-hidden", "true");
+    body.prepend(glow);
+
+    var core = document.createElement("div");
+    core.className = "glow__core";
+    core.setAttribute("aria-hidden", "true");
+    body.prepend(core);
+
+    var trail = [];
     if (fine) {
-      glow = document.createElement("div");
-      glow.className = "glow";
-      glow.setAttribute("aria-hidden", "true");
-      body.prepend(glow);
+      /* trail: each dot chases the one in front of it, so the tail curves
+         through the path the cursor took rather than snapping to a line */
+      for (var i = 0; i < 6; i++) {
+        var d = document.createElement("div");
+        d.className = "trail";
+        d.setAttribute("aria-hidden", "true");
+        var size = 7 - i * 0.8;
+        d.style.width = d.style.height = size + "px";
+        d.style.setProperty("--to", (0.45 - i * 0.06).toFixed(2));
+        body.prepend(d);
+        trail.push({ el: d, x: 0, y: 0, k: 0.34 - i * 0.035 });
+      }
     }
+
+    /* touch pulse: no cursor to track, so a tap just lights the glow at the
+       touch point and lets it fade, instead of chasing a pointer that isn't there */
+    document.addEventListener(
+      "pointerdown",
+      function (e) {
+        if (e.pointerType === "mouse") return;
+        glow.style.setProperty("--gx", e.clientX.toFixed(1) + "px");
+        glow.style.setProperty("--gy", e.clientY.toFixed(1) + "px");
+        core.style.setProperty("--cx", e.clientX.toFixed(1) + "px");
+        core.style.setProperty("--cy", e.clientY.toFixed(1) + "px");
+        glow.setAttribute("data-on", "true");
+        core.setAttribute("data-on", "true");
+        if (window.gsap) {
+          window.gsap.delayedCall(0.7, function () {
+            glow.setAttribute("data-on", "false");
+            core.setAttribute("data-on", "false");
+          });
+        } else {
+          setTimeout(function () {
+            glow.setAttribute("data-on", "false");
+            core.setAttribute("data-on", "false");
+          }, 700);
+        }
+      },
+      { passive: true }
+    );
 
     var shots = Array.prototype.slice.call(document.querySelectorAll(".case__shot"));
     var hero = document.querySelector(".hero");
@@ -113,9 +216,7 @@
       ? Array.prototype.slice.call(document.querySelectorAll(".hero .btn"))
       : [];
 
-    /* Magnetic buttons. The element leans toward the cursor while it is within
-       a radius, then springs back. Capped at 8px: enough to feel alive, small
-       enough that the hit target never runs away from the pointer. */
+    /* Capped at 8px so the hit target never runs from the pointer. */
     var MAG_R = 90;
     var MAG_MAX = 8;
 
@@ -142,8 +243,8 @@
       btn.style.setProperty("--magy", (dy * pull * (MAG_MAX / 40)).toFixed(2) + "px");
     }
 
-    // pointer state: target vs rendered, so the glow eases rather than snaps
-    var tx = 0, ty = 0, gx = 0, gy = 0, hasPointer = false;
+    // halo lags at 0.09, core chases at 0.28; the gap is what sells it
+    var tx = 0, ty = 0, gx = 0, gy = 0, cx = 0, cy = 0, hasPointer = false;
     var ticking = false;
 
     if (fine) {
@@ -154,9 +255,15 @@
           ty = e.clientY;
           if (!hasPointer) {
             hasPointer = true;
-            gx = tx;
-            gy = ty;
+            gx = cx = tx;
+            gy = cy = ty;
             glow.setAttribute("data-on", "true");
+            core.setAttribute("data-on", "true");
+            trail.forEach(function (t) {
+              t.x = tx;
+              t.y = ty;
+              t.el.setAttribute("data-on", "true");
+            });
           }
           request();
         },
@@ -164,10 +271,14 @@
       );
       document.addEventListener("pointerleave", function () {
         glow.setAttribute("data-on", "false");
+        core.setAttribute("data-on", "false");
+        trail.forEach(function (t) {
+          t.el.setAttribute("data-on", "false");
+        });
         hasPointer = false;
       });
 
-      // per-tile cursor wash. Cheap: two custom props, no layout read on move.
+  
       document.querySelectorAll(".lab").forEach(function (lab) {
         lab.addEventListener(
           "pointermove",
@@ -179,7 +290,55 @@
           { passive: true }
         );
       });
+
+      /* rect read on enter, not per move, so tilting costs no layout work */
+      var TILT = 5;
+      document.querySelectorAll(".tilt").forEach(function (el) {
+        var rect = null;
+        el.addEventListener("pointerenter", function () {
+          rect = el.getBoundingClientRect();
+          el.dataset.tilting = "true";
+        });
+        el.addEventListener(
+          "pointermove",
+          function (e) {
+            if (!rect) return;
+            var nx = (e.clientX - rect.left) / rect.width - 0.5;
+            var ny = (e.clientY - rect.top) / rect.height - 0.5;
+            el.style.setProperty("--ry", (nx * TILT * 2).toFixed(2) + "deg");
+            el.style.setProperty("--rx", (-ny * TILT * 2).toFixed(2) + "deg");
+            el.style.setProperty(
+              "--sheen",
+              (Math.atan2(ny, nx) * (180 / Math.PI) + 90).toFixed(1) + "deg"
+            );
+          },
+          { passive: true }
+        );
+        el.addEventListener("pointerleave", function () {
+          el.dataset.tilting = "false";
+          el.style.setProperty("--rx", "0deg");
+          el.style.setProperty("--ry", "0deg");
+          rect = null;
+        });
+      });
     }
+
+    /* one ring, clipped by the pill radius, self-cleaning */
+    document.querySelectorAll(".btn").forEach(function (btn) {
+      btn.addEventListener("pointerdown", function (e) {
+        var r = btn.getBoundingClientRect();
+        var size = Math.max(r.width, r.height) * 2.4;
+        var ring = document.createElement("span");
+        ring.className = "ripple";
+        ring.style.width = ring.style.height = size + "px";
+        ring.style.left = e.clientX - r.left + "px";
+        ring.style.top = e.clientY - r.top + "px";
+        ring.addEventListener("animationend", function () {
+          ring.remove();
+        });
+        btn.appendChild(ring);
+      });
+    });
 
     function request() {
       if (!ticking) {
@@ -192,14 +351,11 @@
       ticking = false;
       var vh = window.innerHeight;
 
-      // hero + grid drift, normalised 0..1 over the first viewport
       var sy = Math.min(window.scrollY / vh, 1.6);
       document.documentElement.style.setProperty("--sy", sy.toFixed(4));
 
-      // magnetic buttons: pull toward the cursor while it is near
       for (var b = 0; b < mags.length; b++) pullMag(mags[b]);
 
-      // screenshot drift: -0.5 entering, +0.5 leaving
       for (var i = 0; i < shots.length; i++) {
         var r = shots[i].getBoundingClientRect();
         if (r.bottom < -200 || r.top > vh + 200) continue;
@@ -207,12 +363,26 @@
         shots[i].style.setProperty("--p", Math.max(-0.5, Math.min(0.5, p)).toFixed(4));
       }
 
-      // glow eases toward the cursor
       if (glow && hasPointer) {
-        gx += (tx - gx) * 0.12;
-        gy += (ty - gy) * 0.12;
+        gx += (tx - gx) * 0.09;
+        gy += (ty - gy) * 0.09;
+        cx += (tx - cx) * 0.28;
+        cy += (ty - cy) * 0.28;
         glow.style.setProperty("--gx", gx.toFixed(1) + "px");
         glow.style.setProperty("--gy", gy.toFixed(1) + "px");
+        core.style.setProperty("--cx", cx.toFixed(1) + "px");
+        core.style.setProperty("--cy", cy.toFixed(1) + "px");
+
+        var px = tx, py = ty;
+        for (var j = 0; j < trail.length; j++) {
+          var d = trail[j];
+          d.x += (px - d.x) * d.k;
+          d.y += (py - d.y) * d.k;
+          d.el.style.setProperty("--tx", d.x.toFixed(1) + "px");
+          d.el.style.setProperty("--ty", d.y.toFixed(1) + "px");
+          px = d.x;
+          py = d.y;
+        }
         if (Math.abs(tx - gx) > 0.4 || Math.abs(ty - gy) > 0.4) request();
       }
     }
@@ -226,12 +396,111 @@
   if (document.readyState !== "loading") initParallax();
   else document.addEventListener("DOMContentLoaded", initParallax);
 
-  /* =======================================================================
-     Hover-to-reveal. Hovering a feature-work tile floats that client's actual
-     site next to the cursor. It is evidence, not decoration, which is the only
-     reason it earns the bytes. Pointer-only and lazy: the images are never
-     fetched on a touch device or by a visitor who does not hover anything.
-     ======================================================================= */
+  /* Card deck. Drag throws the top card; arrows do the same thing for anyone
+     not using a mouse, which is why the buttons are real buttons. */
+  function initDeck(deckId, statusId, prevId, nextId, noun) {
+    var deck = document.getElementById(deckId);
+    if (!deck || !window.gsap) return null;
+    var gsap = window.gsap;
+    var cards = Array.prototype.slice.call(deck.querySelectorAll(".deck__card"));
+    var status = document.getElementById(statusId);
+    var order = cards.slice();
+    var at = 0;
+
+    function layout(animate) {
+      order.forEach(function (card, i) {
+        var to = {
+          zIndex: order.length - i,
+          x: 0,
+          y: i * 10,
+          scale: 1 - i * 0.035,
+          rotation: i === 0 ? 0 : (i % 2 ? 1 : -1) * (i * 0.7),
+          opacity: i > 3 ? 0 : 1,
+          pointerEvents: i === 0 ? "auto" : "none",
+          duration: animate ? 0.45 : 0,
+          ease: "power3.out",
+        };
+        gsap.to(card, to);
+        card.setAttribute("aria-hidden", i === 0 ? "false" : "true");
+        // a scrollable card must be reachable by keyboard (axe: scrollable-region-focusable)
+        var scrolls = card.scrollHeight > card.clientHeight + 1;
+        if (scrolls && i === 0) {
+          // no role: <article> already has one, and role=group is not allowed on it
+          card.setAttribute("tabindex", "0");
+          card.dataset.more = "true";
+        } else {
+          card.removeAttribute("tabindex");
+          card.removeAttribute("data-more");
+        }
+      });
+      if (status) {
+        var label = order[0].querySelector(".deck__name, .quote__who");
+        status.textContent =
+          noun + " " + (at + 1) + " of " + order.length +
+          (label ? ": " + label.textContent : "");
+      }
+    }
+
+    function cycle(dir) {
+      if (dir > 0) order.push(order.shift());
+      else order.unshift(order.pop());
+      at = (at + dir + order.length) % order.length;
+      layout(true);
+    }
+
+    function fling(card, dirX) {
+      gsap.to(card, {
+        x: dirX * (window.innerWidth * 0.7),
+        rotation: dirX * 18,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.in",
+        onComplete: function () {
+          gsap.set(card, { x: 0, rotation: 0, opacity: 1 });
+          cycle(1);
+        },
+      });
+    }
+
+    layout(false);
+
+    var next = document.getElementById(nextId);
+    var prev = document.getElementById(prevId);
+    if (next) next.addEventListener("click", function () { cycle(1); });
+    if (prev) prev.addEventListener("click", function () { cycle(-1); });
+
+    /* drag needs Draggable/InertiaPlugin, so it arms after the lazy load;
+       arrows and layout above already work without it */
+    return function armDraggable() {
+      if (reduced || !window.Draggable) return;
+      cards.forEach(function (card) {
+        window.Draggable.create(card, {
+          type: "x",
+          inertia: !!window.InertiaPlugin,
+          cursor: "grab",
+          activeCursor: "grabbing",
+          onDrag: function () {
+            gsap.set(card, { rotation: this.x / 26 });
+          },
+          onDragEnd: function () {
+            if (Math.abs(this.x) > 110 && order[0] === card) {
+              fling(card, this.x > 0 ? 1 : -1);
+            } else {
+              gsap.to(card, { x: 0, rotation: 0, duration: 0.4, ease: "power3.out" });
+            }
+          },
+        });
+      });
+    };
+  }
+  var deckArm = null;
+  function initDecks() {
+    deckArm = initDeck("deck", "deck-status", "deck-prev", "deck-next", "Card");
+  }
+  if (document.readyState !== "loading") initDecks();
+  else document.addEventListener("DOMContentLoaded", initDecks);
+
+  /* Pointer-only and lazy: thumbs are never fetched until a first hover. */
   function initPeek() {
     if (reduced) return;
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
@@ -282,15 +551,85 @@
   if (document.readyState !== "loading") initPeek();
   else document.addEventListener("DOMContentLoaded", initPeek);
 
-  /* ---------------- motion: GSAP --------------- */
   function initMotion() {
     if (reduced || !window.gsap) return;
     var gsap = window.gsap;
-    if (window.ScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
+    var ST = window.ScrollTrigger;
+    var noHover = root.classList.contains("no-hover");
+    if (ST) gsap.registerPlugin(ST);
 
-    /* reveals */
+    /* Smooth scroll. smoothTouch stays off: on a phone, hijacking momentum
+       fights the platform and always loses. */
+    if (window.ScrollSmoother && window.innerWidth > 900) {
+      gsap.registerPlugin(window.ScrollSmoother);
+      window.ScrollSmoother.create({
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
+        smooth: 1.1,
+        effects: false,
+        normalizeScroll: false,
+        smoothTouch: false,
+      });
+    }
+
+    /* Center-stage: on no-hover devices the card nearest viewport centre gets
+       the same .is-active treatment desktop gives on :hover (see main.css). */
+    if (ST && noHover) {
+      document.querySelectorAll(".tilt, .case, .lab").forEach(function (el) {
+        ST.create({
+          trigger: el,
+          start: "top 65%",
+          end: "bottom 35%",
+          onToggle: function (self) {
+            el.classList.toggle("is-active", self.isActive);
+          },
+        });
+      });
+    }
+
+    /* Velocity skew: decorative shots lean with scroll speed, settle at rest.
+       Writes --skew, a plain number; the unit is added in CSS via calc(). */
+    if (ST) {
+      var skewTo = gsap.quickTo(".case__shot img", "--skew", {
+        duration: 0.5,
+        ease: "power3",
+      });
+      ST.create({
+        onUpdate: function (self) {
+          skewTo(gsap.utils.clamp(-3, 3, self.getVelocity() / -350));
+        },
+      });
+      ST.addEventListener("scrollEnd", function () {
+        skewTo(0);
+      });
+    }
+
+    /* aria:"auto" keeps the headline one sentence for screen readers */
+    var head = document.querySelector(".hero .display");
+    if (head && window.SplitText) {
+      gsap.registerPlugin(window.SplitText);
+      var split = new window.SplitText(head, {
+        type: "lines",
+        linesClass: "line",
+        aria: "auto",
+      });
+      split.lines.forEach(function (line) {
+        var mask = document.createElement("span");
+        mask.className = "line-mask";
+        line.parentNode.insertBefore(mask, line);
+        mask.appendChild(line);
+      });
+      gsap.from(split.lines, {
+        yPercent: 108,
+        duration: 0.9,
+        ease: "power3.out",
+        stagger: 0.08,
+        delay: 0.05,
+      });
+    }
+
     gsap.utils.toArray(".reveal").forEach(function (el) {
-      window.ScrollTrigger.create({
+      ST.create({
         trigger: el,
         start: "top 88%",
         once: true,
@@ -300,13 +639,35 @@
       });
     });
 
-    /* count-ups. The final value is already in the HTML, so a failure here
-       degrades to the correct number rather than to zero. */
+    [".labs", ".ledger", ".scroller__rail", ".skills"].forEach(function (sel) {
+      var wrap = document.querySelector(sel);
+      if (!wrap) return;
+      var kids = wrap.children;
+      if (!kids.length) return;
+      gsap.from(kids, {
+        opacity: 0,
+        y: 18,
+        duration: 0.55,
+        ease: "power2.out",
+        stagger: 0.06,
+        scrollTrigger: { trigger: wrap, start: "top 86%", once: true },
+      });
+    });
+
+    /* final value is already in the HTML, so failure degrades to the truth */
     gsap.utils.toArray("[data-count]").forEach(function (el) {
       var target = parseFloat(el.dataset.count);
       var decimals = parseInt(el.dataset.decimals || "0", 10);
-      var node = el.firstChild; // the text node holding the number
+      var node = el.firstChild;
       if (!node || node.nodeType !== 3 || isNaN(target)) return;
+
+      var trueValue = target.toLocaleString("en-US", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      });
+      /* single source of truth: initLate's rerun reads this back so both
+         paths always land on the exact same string */
+      el.dataset.trueText = trueValue;
 
       var box = { v: 0 };
       window.ScrollTrigger.create({
@@ -325,46 +686,227 @@
               });
             },
             onComplete: function () {
-              node.nodeValue = target.toLocaleString("en-US", {
-                minimumFractionDigits: decimals,
-                maximumFractionDigits: decimals,
-              });
+              node.nodeValue = trueValue;
             },
           });
         },
       });
     });
+  }
 
-    /* architecture diagram assembles on scroll */
+  /* Below-the-fold motion: eyebrow scramble, number re-runs, timeline spine,
+     typewriter, endorsement chip, arch-diagram draw, and deck drag. All need
+     one of the lazy plugins, so this only runs once loadLate() resolves. */
+  function initLate() {
+    if (reduced || !window.gsap) return;
+    var gsap = window.gsap;
+    var ST = window.ScrollTrigger;
+    var noHover = root.classList.contains("no-hover");
+
+    /* mono labels only; body copy would read as a gimmick */
+    if (window.ScrambleTextPlugin && ST) {
+      gsap.utils.toArray(".eyebrow").forEach(function (el) {
+        var finalText = el.textContent;
+        ST.create({
+          trigger: el,
+          start: "top 92%",
+          once: true,
+          onEnter: function () {
+            gsap.to(el, {
+              duration: 0.9,
+              ease: "none",
+              scrambleText: {
+                text: finalText,
+                chars: "upperCase",
+                speed: 0.4,
+                revealDelay: 0.15,
+              },
+            });
+          },
+        });
+      });
+    }
+
+    /* "re-run the numbers": scrambles then always resolves to the value
+       initMotion already computed and stashed in dataset.trueText. Wrapping
+       just the digits keeps the suffix span (%, ×) untouched by the scramble. */
+    if (window.ScrambleTextPlugin) {
+      gsap.utils.toArray("[data-count]").forEach(function (el) {
+        var trueValue = el.dataset.trueText;
+        var node = el.firstChild;
+        if (!trueValue || !node || node.nodeType !== 3) return;
+
+        var numWrap = document.createElement("span");
+        el.insertBefore(numWrap, node);
+        numWrap.appendChild(node);
+
+        var rerun = function () {
+          gsap.to(numWrap, {
+            duration: 0.7,
+            overwrite: true,
+            scrambleText: { text: trueValue, chars: "0123456789", speed: 0.4, revealDelay: 0.1 },
+          });
+        };
+
+        var ledger = el.closest(".ledger__item, .case__outcome");
+        if (ledger) {
+          if (!noHover) ledger.addEventListener("mouseenter", rerun);
+          ledger.addEventListener("pointerdown", function (e) {
+            if (e.pointerType !== "mouse") rerun();
+          });
+          var btn = ledger.querySelector(".rerun");
+          if (btn) btn.addEventListener("click", rerun);
+        }
+      });
+    }
+
+    /* timeline spine draws down, nodes pop as it passes them */
+    var tl = document.querySelector(".tl");
+    if (tl && window.DrawSVGPlugin && ST) {
+      var spine = tl.querySelector(".tl__spine line");
+      var nodes = tl.querySelectorAll(".tl__node");
+      gsap.set(spine, { drawSVG: "0%" });
+      gsap.set(nodes, { scale: 0, transformOrigin: "center" });
+      var t2 = gsap.timeline({
+        scrollTrigger: { trigger: tl, start: "top 74%", once: true },
+      });
+      t2.to(spine, { drawSVG: "100%", duration: 1, ease: "power2.inOut" })
+        .to(nodes, { scale: 1, duration: 0.35, stagger: 0.18, ease: "back.out(2)" }, 0.15);
+    }
+
+    /* typewriter on the availability line: it is the one bit of copy that is
+       a live status rather than a fact */
+    var type = document.querySelector("[data-type]");
+    if (type && window.TextPlugin && ST) {
+      var msg = type.dataset.type;
+      type.textContent = "";
+      gsap.to(type, {
+        text: { value: msg, delimiter: "" },
+        duration: msg.length * 0.035,
+        ease: "none",
+        delay: 0.9,
+        scrollTrigger: { trigger: type, start: "top 95%", once: true },
+      });
+    }
+
+    /* endorsement chips cycle through the words real clients picked on Upwork */
+    var chip = document.getElementById("chip");
+    if (chip && window.TextPlugin && ST) {
+      var words = JSON.parse(chip.dataset.words || "[]");
+      if (words.length) {
+        var loop = gsap.timeline({
+          repeat: -1,
+          scrollTrigger: { trigger: chip, start: "top 92%" },
+        });
+        words.forEach(function (w) {
+          loop
+            .to(chip, { text: { value: w, delimiter: "" }, duration: 0.45, ease: "none" })
+            .to({}, { duration: 1.6 });
+        });
+      }
+    }
+
+    /* edges draw in the direction traffic flows */
     var arch = document.querySelector(".arch svg");
-    if (arch) {
+    if (arch && ST) {
       var groups = arch.querySelectorAll(".arch-anim");
+      var edges = arch.querySelectorAll(".arch-edge");
+
       gsap.set(groups, { opacity: 0, y: 8 });
-      window.ScrollTrigger.create({
+      if (window.DrawSVGPlugin) gsap.set(edges, { drawSVG: "0%" });
+
+      ST.create({
         trigger: arch,
         start: "top 78%",
         once: true,
         onEnter: function () {
-          gsap.to(groups, {
+          var archTl = gsap.timeline();
+          archTl.to(groups, {
             opacity: 1,
             y: 0,
-            duration: 0.5,
-            stagger: 0.07,
+            duration: 0.45,
+            stagger: 0.06,
             ease: "power2.out",
           });
+          if (window.DrawSVGPlugin) {
+            archTl.to(
+              edges,
+              {
+                drawSVG: "100%",
+                duration: 0.5,
+                stagger: 0.05,
+                ease: "power1.inOut",
+              },
+              "-=0.25"
+            );
+          }
         },
       });
     }
+
+    if (deckArm) deckArm();
   }
 
-  /* GSAP is deferred; wait for it without blocking first paint. */
-  if (document.readyState !== "loading") initMotion();
-  else document.addEventListener("DOMContentLoaded", initMotion);
+  /* Rail scrollspy. Runs regardless of reduced-motion: knowing where you are
+     is information. Uses IntersectionObserver, not a scroll handler. */
+  function initRail() {
+    var rail = document.getElementById("rail");
+    if (!rail || !("IntersectionObserver" in window)) return;
+    var links = Array.prototype.slice.call(rail.querySelectorAll("a"));
+    var seen = {};
 
-  /* =======================================================================
-     Live demo: images -> PDF, entirely client-side.
-     pdf-lib is 525KB, so it is fetched only once you actually pick a file.
-     ======================================================================= */
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) {
+          seen[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0;
+        });
+        var best = null, top = 0;
+        Object.keys(seen).forEach(function (id) {
+          if (seen[id] > top) {
+            top = seen[id];
+            best = id;
+          }
+        });
+        links.forEach(function (a) {
+          var on = best && a.getAttribute("href") === "#" + best;
+          if (on) a.setAttribute("aria-current", "true");
+          else a.removeAttribute("aria-current");
+        });
+      },
+      { threshold: [0, 0.15, 0.4, 0.75], rootMargin: "-15% 0px -35% 0px" }
+    );
+    links.forEach(function (a) {
+      var el = document.querySelector(a.getAttribute("href"));
+      if (el) io.observe(el);
+    });
+
+    /* ScrollSmoother owns the scroll position, so a native anchor jump would
+       fight it. Hand off to the smoother when it exists; otherwise let the
+       browser do what it already does well. */
+    rail.addEventListener("click", function (e) {
+      var a = e.target.closest("a");
+      if (!a) return;
+      var s = window.ScrollSmoother && window.ScrollSmoother.get();
+      if (!s) return;
+      e.preventDefault();
+      s.scrollTo(a.getAttribute("href"), true, "top 80px");
+    });
+  }
+  if (document.readyState !== "loading") initRail();
+  else document.addEventListener("DOMContentLoaded", initRail);
+
+  /* SplitText measures line breaks, so it must wait for the real font metrics.
+     armLate() itself only arms listeners; the actual lazy load waits for
+     scroll, pointerdown, or idle, so it never competes with first paint. */
+  function initMotionAndArm() {
+    initMotion();
+    armLate();
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(initMotionAndArm);
+  else if (document.readyState !== "loading") initMotionAndArm();
+  else document.addEventListener("DOMContentLoaded", initMotionAndArm);
+
+  /* Client-side only. pdf-lib is 513KB, fetched only on first build. */
   var drop = document.getElementById("drop");
   var input = document.getElementById("files");
   var thumbs = document.getElementById("thumbs");
@@ -491,7 +1033,7 @@
           } else if (file.type === "image/jpeg") {
             image = await doc.embedJpg(bytes);
           } else {
-            // pdf-lib has no WebP path: transcode to PNG via canvas first.
+            // pdf-lib has no WebP path
             image = await doc.embedPng(await webpToPng(file));
           }
 
